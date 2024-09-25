@@ -34,12 +34,14 @@ public class Robot : MonoBehaviour
     {
         // Check if cooldown is up with Delta Time
 
-        // Find the closest enemy within range
+        // Find the closest enemy within range using the enemyList from the manager
+
+        // Call the Shoot method to attack the nearest enemy
     }
 
     // Shoot an enemy to do damage to it
     void Shoot(Bug enemy)
     {
-        // Do damage to the nearest enemy
+        // Call the nearest enemy's take damage function
     }
 }

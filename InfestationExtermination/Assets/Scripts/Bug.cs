@@ -26,7 +26,7 @@ public class Bug : MonoBehaviour
     }
 
     // Takes damage from a source and reduces health
-    void takeDamage(int damage)
+    void TakeDamage(int damage)
     {
         // Reduce health by the amount of damage
         health -= damage;
