@@ -39,9 +39,13 @@ public class AsteroidScript : MonoBehaviour
         {
             //Spawns a button, searches for that button, then parents it to the canvas and gives the asteroid position. 
             Instantiate(buttonPopUp, asteroidPosition, new Quaternion());
+            //Looks for the instatiated prefab
             GameObject tempPrefab = GameObject.Find("Prompt(Clone)");
+            //parents it to the canvas
             tempPrefab.transform.SetParent(canvas.transform);
+            //Changes the public variable asteroidposition of the tempPrefab to the astroid's asteroidPosition
             tempPrefab.GetComponent<PromptScript>().asteroidPosition = asteroidPosition;
+            //Changes the tempPrefab's name to prevent errors
             tempPrefab.name = promptName;
             ifObject = true; //Can't be clicked anymore
         }   
