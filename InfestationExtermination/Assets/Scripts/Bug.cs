@@ -1,17 +1,23 @@
-﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+using UnityEngine;
 
-namespace CharacterClasses
+public class Bug : MonoBehaviour
 {
-    internal class Bug
+    // Fields
+    [SerializeField] private int health;
+    [SerializeField] private int damage;
+
+
+    // Start is called before the first frame update
+    void Start()
     {
-        private int health;
-        private int damage;
-        private int range;
-        private double rateOfFire;
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
     }
 }
