@@ -8,8 +8,8 @@ public class PromptScript : MonoBehaviour
     //temp/main robot game object
     public GameObject mainRobot;
 
-    //Astroid position
-    public Vector3 astroidPosition;
+    //Asteroid position
+    public Vector3 asteroidPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +20,7 @@ public class PromptScript : MonoBehaviour
     //Spawns in a robot
     public void spawnRobot()
     {
-        Instantiate(mainRobot, astroidPosition, new Quaternion());
+        Instantiate(mainRobot, asteroidPosition, new Quaternion());
         Destroy(gameObject);
     }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AstroidScript : MonoBehaviour
+public class AsteroidScript : MonoBehaviour
 {
     //button pop up prefab
     public GameObject buttonPopUp;
@@ -11,10 +11,10 @@ public class AstroidScript : MonoBehaviour
     public string promptName;
     //Canvas 
     public GameObject canvas;
-    //bool to check if object on the astroid
+    //bool to check if object on the asteroid
     public bool ifObject;
-    //Vector3 of the poisiton of astroid
-    public Vector3 astroidPosition;
+    //Vector3 of the poisiton of asteroid
+    public Vector3 asteroidPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -23,7 +23,7 @@ public class AstroidScript : MonoBehaviour
         canvas = GameObject.Find("Canvas");
 
         //Gets the current position as well as changing the Z.
-        astroidPosition = new Vector3(transform.position.x, transform.position.y, 0); //we may need to move this to update for the moving atroids. But we'll cross that bridge when we get to it
+        asteroidPosition = new Vector3(transform.position.x, transform.position.y, 0); //we may need to move this to update for the moving asteroids. But we'll cross that bridge when we get to it
     }
 
     // Update is called once per frame
@@ -37,11 +37,11 @@ public class AstroidScript : MonoBehaviour
     {
         if (ifObject == false)
         {
-            //Spawns a button, searches for that button, then parents it to the canvas and gives the astroid position. 
-            Instantiate(buttonPopUp, astroidPosition, new Quaternion());
+            //Spawns a button, searches for that button, then parents it to the canvas and gives the asteroid position. 
+            Instantiate(buttonPopUp, asteroidPosition, new Quaternion());
             GameObject tempPrefab = GameObject.Find("Prompt(Clone)");
             tempPrefab.transform.SetParent(canvas.transform);
-            tempPrefab.GetComponent<PromptScript>().astroidPosition = astroidPosition;
+            tempPrefab.GetComponent<PromptScript>().asteroidPosition = asteroidPosition;
             tempPrefab.name = promptName;
             ifObject = true; //Can't be clicked anymore
         }   
