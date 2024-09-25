@@ -5,7 +5,11 @@ using UnityEngine;
 public class Bug : MonoBehaviour
 {
     // Fields
+
+    // The amount of health a bug has
     [SerializeField] private int health;
+
+    // The amount of damage a bug does in an attack
     [SerializeField] private int damage;
 
 
@@ -19,5 +23,12 @@ public class Bug : MonoBehaviour
     void Update()
     {
         
+    }
+
+    // Takes damage from a source and reduces health
+    void takeDamage(int damage)
+    {
+        // Reduce health by the amount of damage
+        health -= damage;
     }
 }
