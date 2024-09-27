@@ -1,3 +1,13 @@
+// ===============================
+// AUTHOR       : Justin Huang
+// CREATE DATE  : 9/23/24?
+// PURPOSE      : To Manage Health and Currency Display Numbers
+// SPECIAL NOTES:
+// ===============================
+// Change History:
+//
+//==================================
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
