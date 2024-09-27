@@ -5,16 +5,21 @@ using UnityEngine;
 
 public class Bug : MonoBehaviour
 {
-    // Fields
+    // --- Fields ---
+    [SerializeField] private GameObject thisBug; // The bug this script is attached to
 
-    // The amount of health a bug has
-    [SerializeField] private int health;
+    [SerializeField] private int health; // Amount of health a bug has
+    [SerializeField] private int damage; // Amount of damage a bug does in an attack
 
-    // The amount of damage a bug does in an attack
-    [SerializeField] private int damage;
+    [SerializeField] private float speed = 1.0f; // Speed that the bug will move at
+    [SerializeField] private List<Vector3> positions = new List<Vector3>(); // List of positions for the bug to travel to
+    [SerializeField] private GameObject targetObject; // Target object of bug
+    private Transform target; // Variable to hold target position
+    private int positionIndex; // Current index of position list
 
 
-    // Properties
+
+    // --- Properties ---
 
     // Getters and setters for health amount
     public int Health
@@ -42,7 +47,7 @@ public class Bug : MonoBehaviour
         get { return transform.position.y; }
     }
 
-    // Methods
+    // --- Methods ---
 
     // Start is called before the first frame update
     void Start()
@@ -52,12 +57,39 @@ public class Bug : MonoBehaviour
 
         // Initalize the damage
         damage = 10;
+
+        // Set position index to 0
+        positionIndex = 0;
+
+        // Set target
+        target = targetObject.transform;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        // Make sure that the current position index is within range of the positions list
+        if (positionIndex < positions.Count)
+        {
+            // Move target to new position
+            targetObject.transform.position = positions[positionIndex];
+
+            // Move position a step closer to target
+            float step = speed * Time.deltaTime;
+            transform.position = Vector3.MoveTowards(transform.position, target.position, step);
+
+            // If the bug has reached its current target, increment the position index
+            if (Vector3.Distance(transform.position, target.position) < 0.001f)
+            {
+                positionIndex++;
+            }
+        }
+        // Once the final position has been reached, take damage and destroy this bug
+        else
+        {
+            // CANNOT FIGURE THIS OUT I AM SO SORRY
+        }
     }
 
     // Takes damage from a source and reduces health
