@@ -9,39 +9,89 @@ using UnityEngine;
 // SPECIAL NOTES:
 // ===============================
 // Change History:
-//  9/27/24 - 
+//  9/27/24 - Added Update behaviour to check if an enemy runs out of health and destroys them.
+//          - Added Spawning system using variables for how many enemies to spawn and how far apart to spawn them.            
 //  9/25/24 - Created
 //==================================
 
 public class EnemyManager : MonoBehaviour
 {
-    // Fields
+    // === Fields ===
 
     // List of all bug enemies
-    List<Bug> enemiesList = new List<Bug>();
+    [SerializeField] List<GameObject> enemiesList = new List<GameObject>();
+
+    // Prefab for bug enemy
+    [SerializeField] private GameObject BugPrefab;
+
+    // Spawn point for bugs
+    [SerializeField] private Vector3 bugSpawnPoint;
+
+    // Amount of enemies to spawn
+    [SerializeField] private int amountOfEnemies;
+
+    [SerializeField] private float distanceBetweenEnemies;
+
+    // List of all bug enemies to be deleted
+    // This prevents errors caused by deleting an item while it exists in a list being looped through
+    List<GameObject> enemiesToDestroy = new List<GameObject>();
 
 
-    // Properties
+    // === Properties ===
 
     // Gets the enemies list
-    public List<Bug> EnemiesList
+    public List<GameObject> EnemiesList
     {
         get { return enemiesList; }
     }
 
 
+    // === Methods ===
+
     // Start is called before the first frame update
     void Start()
     {
-        // === FOR DEBUGGING ===
-        EnemiesList.Add(new Bug());
+        Debug.Log("Started!");
+
+        for (int i = 0; i < amountOfEnemies; i++)
+        {
+            // Spawn in a bug at a point incrementally upward
+            EnemiesList.Add(
+                Instantiate(
+                    BugPrefab,
+                    new Vector3(
+                        bugSpawnPoint.x,
+                        bugSpawnPoint.y + distanceBetweenEnemies * i,
+                        bugSpawnPoint.z
+                        ),
+                    Quaternion.identity
+                    )
+                );
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Check if the health of any enemy in the list is below 0
+        // Loop through every enemy and check if its health is <= 0
+        foreach (GameObject enemy in EnemiesList)
+        {
+            // If the enemy is out of health
+            if (enemy.GetComponent<Bug>().Health <= 0)
+            {
+                // Add the enemy to the list of enemies to destroy
+                enemiesToDestroy.Add(enemy);
+            }
+        }
 
-        // If so, Remove the object then Destroy the object
+        // Remove the enemies slated to be removed
+        foreach (GameObject enemy in enemiesToDestroy)
+        {
+            // Remove the reference to the enemy
+            enemiesList.Remove(enemy);
+
+            // Delete the enemy from the scene
+            Destroy(enemy);
+        }
     }
 }

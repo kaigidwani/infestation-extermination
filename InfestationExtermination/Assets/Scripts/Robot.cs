@@ -1,6 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+// ===============================
+// AUTHOR: Kai Gidwani & Jacobe Richard
+// CREATE DATE: 9/25/24
+// PURPOSE: Holds all information and methods for the Robot turrets
+// SPECIAL NOTES:
+// ===============================
+// Change History:
+//  9/27/24 - Implemented AttemptShoot method
+//          - Implemented Shoot method
+//          - Added Gizmos and debug prints for debugging
+//  9/25/24 - Created
+//==================================
 
 public class Robot : MonoBehaviour
 {
@@ -19,7 +33,7 @@ public class Robot : MonoBehaviour
     private float lastShotTime;
 
     // The enemy manager
-    [SerializeField] private EnemyManager enemyManager;
+    [SerializeField] private GameObject enemyManager;
 
 
     // Properties
@@ -51,14 +65,8 @@ public class Robot : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Set the damage
-        damage = 20;
+        enemyManager = GameObject.Find("EnemyManager");
 
-        // Set the range
-        range = 200;
-
-        // Set the rate of fire
-        rateOfFire = 2.0f;
     }
 
     // Update is called once per frame
@@ -72,26 +80,45 @@ public class Robot : MonoBehaviour
     void AttemptShoot()
     {
         // Check if cooldown is up with Delta Time
-        if (Time.deltaTime > lastShotTime + rateOfFire)
+        if (Time.time > lastShotTime + rateOfFire)
         {
+            lastShotTime = Time.time;
+
+            // Print a debug log that we are going to try to shoot
+            Debug.Log("Attempting to shoot!");
+
             // If there is at least one enemy alive
-            if (enemyManager.EnemiesList.Count > 0)
+            if (enemyManager.GetComponent<EnemyManager>().EnemiesList.Count > 0)
             {
-                // Set the initial closest enemy to the first one
-                Bug closestEnemy = enemyManager.EnemiesList[0];
+                // Create a list of enemies that are within range of this turret
+                List<GameObject> inRangeEnemies = new List<GameObject>();
 
-                // Set the initial closest distance to the first one
-                // This is so we don't need to redo the same math multiple times,
-                // every time we want to compare distances
-                float closestEnemyDist = Vector3.Distance(this.transform.position,
-                    enemyManager.EnemiesList[0].transform.position);
-
-
-                // Find the closest enemy within range using the enemyList from the manager
-                foreach (Bug currentEnemy in enemyManager.EnemiesList)
+                // Find each enemy that is within range and add it to the list
+                foreach (GameObject currentEnemy in enemyManager.GetComponent<EnemyManager>().EnemiesList)
                 {
                     // If the distance to an enemy is within the range
                     if (Vector3.Distance(this.transform.position, currentEnemy.transform.position) < range)
+                    {
+                        // Add the current enemy to the list of in-range enemies
+                        inRangeEnemies.Add(currentEnemy);
+                    }
+                }
+
+
+                // If there is at least 1 enemy in range
+                if (inRangeEnemies.Count > 0)
+                {
+                    // Set the initial closest enemy to the first one
+                    GameObject closestEnemy = enemyManager.GetComponent<EnemyManager>().EnemiesList[0];
+
+                    // Set the initial closest distance to the first one
+                    // This is so we don't need to redo the same math multiple times,
+                    // every time we want to compare distances
+                    float closestEnemyDist = Vector3.Distance(this.transform.position,
+                        enemyManager.GetComponent<EnemyManager>().EnemiesList[0].transform.position);
+
+                    // Find the closest enemy that is within range
+                    foreach (GameObject currentEnemy in inRangeEnemies)
                     {
                         // Saves the distance to the current enemy in the list
                         float currentDistance = Vector3.Distance(this.transform.position,
@@ -106,19 +133,32 @@ public class Robot : MonoBehaviour
                             // Set the closest distance to the current distance
                             closestEnemyDist = currentDistance;
                         }
-
                     }
-                }
 
-                // Call the shoot function on the nearest enemy
-                Shoot(closestEnemy);
+                    // Call the shoot function on the nearest enemy
+                    Shoot(closestEnemy);
+                }
             }
         }
     }
 
     // Shoot an enemy to do damage to it
-    void Shoot(Bug enemy)
+    void Shoot(GameObject enemy)
     {
         // Call the nearest enemy's take damage function
+        enemy.GetComponent<Bug>().TakeDamage(damage);
+
+        // Debug to show when fired
+        Debug.Log("Fired!");
+    }
+
+    // Draw the Gizmos
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+
+        Gizmos.DrawWireSphere(
+            transform.position,
+            range);
     }
 }
