@@ -24,7 +24,7 @@ public class UIScript : MonoBehaviour
     void Start()
     {
         health = 100;
-        currency = 10;
+        currency = 5;
         UpdateHealth(0);
         UpdateCurrency(0);
     }
