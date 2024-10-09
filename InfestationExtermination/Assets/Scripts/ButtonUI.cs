@@ -5,6 +5,7 @@
 // SPECIAL NOTES:
 // ===============================
 // Change History:
+//  10/9/24 - Added QuitButton()
 //
 //==================================
 
@@ -20,6 +21,15 @@ public class ButtonUI : MonoBehaviour
     public void PlayButton()
     {
         SceneManager.LoadScene(1);
+    }
+
+    public void QuitButton()
+    {
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+
+        #endif
+        Application.Quit();
     }
 
     public void PauseButton()
