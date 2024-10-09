@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 // ===============================
@@ -150,6 +151,12 @@ public class Robot : MonoBehaviour
 
         // Debug to show when fired
         Debug.Log("Fired!");
+
+        //Calculates the rotation needed for the robot based on the robot's positions (KINDA BROKEN)
+        Quaternion robotTurn =  Quaternion.Euler(0, 0, Mathf.Rad2Deg * (math.sin((gameObject.transform.position.y - enemy.transform.position.y) / (gameObject.transform.position.x - enemy.transform.position.x))));
+
+        //Sets that rotation
+        gameObject.transform.rotation = robotTurn;
     }
 
     // Draw the Gizmos
