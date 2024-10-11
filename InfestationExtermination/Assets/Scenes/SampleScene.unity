@@ -1722,6 +1722,7 @@ MonoBehaviour:
   bugSpawnPoint: {x: -7.47, y: 4.54, z: 1}
   amountOfEnemies: 3
   distanceBetweenEnemies: 3
+  canvas: {fileID: 639271951}
 --- !u!4 &1607619852
 Transform:
   m_ObjectHideFlags: 0

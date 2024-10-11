@@ -47,6 +47,16 @@ public class Bug : MonoBehaviour
         get { return transform.position.y; }
     }
 
+    public int PositionIndex
+    {
+        get { return positionIndex; }
+    }
+
+    public int PositionCount
+    {
+        get { return positions.Count; }
+    }
+
     // --- Methods ---
 
     // Start is called before the first frame update

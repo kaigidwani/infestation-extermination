@@ -5,7 +5,7 @@
 // SPECIAL NOTES:
 // ===============================
 // Change History:
-//
+//  10/11/24 - Made the methods public
 //==================================
 
 using System.Collections;
@@ -29,13 +29,13 @@ public class UIScript : MonoBehaviour
         UpdateCurrency(0);
     }
 
-    void UpdateHealth(int number)
+    public void UpdateHealth(int number)
     {
         health += number;
         healthText.text = health.ToString();
     }
 
-    void UpdateCurrency(int number)
+    public void UpdateCurrency(int number)
     {
         currency += number;
         currencyText.text = currency.ToString();
