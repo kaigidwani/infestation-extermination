@@ -754,8 +754,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6461802785e280044ad0af04125e623d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthText: {fileID: 2028778998}
-  currencyText: {fileID: 1003733587}
+  healthText: {fileID: 1003733587}
+  currencyText: {fileID: 2028778998}
 --- !u!1 &989814228
 GameObject:
   m_ObjectHideFlags: 0
@@ -1154,7 +1154,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 178.39594, y: -51.00052}
+  m_AnchoredPosition: {x: 178.39587, y: -51.00049}
   m_SizeDelta: {x: 189.66, y: 92.57}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1123578410
