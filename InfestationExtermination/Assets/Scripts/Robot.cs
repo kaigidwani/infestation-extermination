@@ -11,6 +11,7 @@ using UnityEngine;
 // SPECIAL NOTES:
 // ===============================
 // Change History:
+// 10/16/24 - Added SFX
 //  9/27/24 - Implemented AttemptShoot method
 //          - Implemented Shoot method
 //          - Added Gizmos and debug prints for debugging
@@ -36,6 +37,8 @@ public class Robot : MonoBehaviour
     // The enemy manager
     [SerializeField] private GameObject enemyManager;
 
+    // Shoot SFX
+    [SerializeField] private AudioSource shootSFX;
 
     // Properties
 
@@ -157,6 +160,9 @@ public class Robot : MonoBehaviour
 
         //Sets that rotation
         gameObject.transform.rotation = robotTurn;
+
+        //Plays audio
+        shootSFX.Play();
     }
 
     // Draw the Gizmos
