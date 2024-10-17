@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 // ===============================
 // AUTHOR: Kai Gidwani & Jacobe Richard
@@ -11,6 +12,8 @@ using UnityEngine;
 // SPECIAL NOTES:
 // ===============================
 // Change History:
+// 10/16/24 - Rotation should be working, I do want to note that future robots should be drawn facing the same way 
+//            or we can just draw the original one facing up and future ones as well, so we can remove offset B (Justin Huang)
 // 10/16/24 - Added SFX
 //  9/27/24 - Implemented AttemptShoot method
 //          - Implemented Shoot method
@@ -156,10 +159,12 @@ public class Robot : MonoBehaviour
         Debug.Log("Fired!");
 
         //Calculates the rotation needed for the robot based on the robot's positions (KINDA BROKEN)
-        Quaternion robotTurn =  Quaternion.Euler(0, 0, Mathf.Rad2Deg * (math.sin((gameObject.transform.position.y - enemy.transform.position.y) / (gameObject.transform.position.x - enemy.transform.position.x))));
+        Vector3 offsetA = enemy.transform.position - transform.position;
+        Quaternion offsetB = quaternion.AxisAngle(new Vector3(0, 0, 1), 90);
 
         //Sets that rotation
-        gameObject.transform.rotation = robotTurn;
+        transform.rotation = Quaternion.LookRotation(Vector3.forward, offsetA);
+        transform.rotation *= offsetB;
 
         //Plays audio
         shootSFX.Play();

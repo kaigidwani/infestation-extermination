@@ -11,16 +11,22 @@ public class PromptScript : MonoBehaviour
     //Asteroid position
     public Vector3 asteroidPosition;
 
+    // To get access to UI
+    private GameObject canvas;
+    private UIScript UIScript;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        canvas = GameObject.Find("Canvas");
+        UIScript = canvas.GetComponent<UIScript>();
     }
 
     //Spawns in a robot
     public void spawnRobot()
     {
         Instantiate(mainRobot, asteroidPosition, new Quaternion());
+        UIScript.UpdateCurrency(-5);
         Destroy(gameObject);
     }
 
