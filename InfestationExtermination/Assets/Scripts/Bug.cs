@@ -89,16 +89,16 @@ public class Bug : MonoBehaviour
             float step = speed * Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, target.position, step);
 
+            // Calculate the direction and angle (degrees) to the target then apply rotation
+            Vector2 targetDirection = new Vector2(target.position.x - transform.position.x, target.position.y - transform.position.y);
+            float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0, 0, angle);
+
             // If the bug has reached its current target, increment the position index
             if (Vector3.Distance(transform.position, target.position) < 0.001f)
             {
                 positionIndex++;
             }
-        }
-        // Once the final position has been reached, take damage and destroy this bug
-        else
-        {
-            // CANNOT FIGURE THIS OUT I AM SO SORRY
         }
     }
 

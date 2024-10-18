@@ -2216,7 +2216,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemiesList: []
   BugPrefab: {fileID: 4791549053597893821, guid: ad03826f616ff4e4dadac541b64da1e5, type: 3}
-  bugSpawnPoint: {x: -7.47, y: 4.54, z: 1}
+  bugSpawnPoint: {x: -7.7, y: 4.54, z: 1}
   amountOfEnemies: 3
   distanceBetweenEnemies: 3
 --- !u!4 &1607619852
