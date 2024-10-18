@@ -15,10 +15,10 @@ using static UnityEngine.GraphicsBuffer;
 // 10/16/24 - Rotation should be working, I do want to note that future robots should be drawn facing the same way 
 //            or we can just draw the original one facing up and future ones as well, so we can remove offset B (Justin Huang)
 // 10/16/24 - Added SFX
-//  9/27/24 - Implemented AttemptShoot method
-//          - Implemented Shoot method
-//          - Added Gizmos and debug prints for debugging
-//  9/25/24 - Created
+//  9/27/24 - Implemented AttemptShoot method (Kai Gidwani)
+//          - Implemented Shoot method (Kai Gidwani)
+//          - Added Gizmos and debug prints for debugging (Kai Gidwani)
+//  9/25/24 - Created (Jacobe Richard & Kai Gidwani)
 //==================================
 
 public class Robot : MonoBehaviour
@@ -43,6 +43,10 @@ public class Robot : MonoBehaviour
     // Shoot SFX
     [SerializeField] private AudioSource shootSFX;
 
+    // Reference to asteroid that this tower is placed onto
+    private AsteroidScript asteroidReference;
+
+
     // Properties
 
     // Getters and setters for turret damage
@@ -66,6 +70,12 @@ public class Robot : MonoBehaviour
         set { rateOfFire = value; }
     }
 
+    // Getters and setters for the reference asteroid
+    public AsteroidScript AsteroidReference
+    {
+        get { return asteroidReference; }
+        set { asteroidReference = value; }
+    }
 
     // Methods
 
@@ -81,6 +91,9 @@ public class Robot : MonoBehaviour
     {
         // Attempt to shoot an enemy
         AttemptShoot();
+
+        // Update location to asteroid reference's location
+        transform.position = asteroidReference.transform.position;
     }
 
     // Attempt to shoot an enemy in range

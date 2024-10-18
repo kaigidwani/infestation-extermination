@@ -32,13 +32,19 @@ public class EnemyManager : MonoBehaviour
     // Amount of enemies to spawn
     [SerializeField] private int amountOfEnemies;
 
+    // The distance between each enemy
     [SerializeField] private float distanceBetweenEnemies;
 
     // List of all bug enemies to be deleted
     // This prevents errors caused by deleting an item while it exists in a list being looped through
     List<GameObject> enemiesToDestroy = new List<GameObject>();
+
+    // Reference to the canvas
     private GameObject canvas;
+
+    // Reference to the UIScript object
     private UIScript UIScript;
+
     // === Properties ===
 
     // Gets the enemies list

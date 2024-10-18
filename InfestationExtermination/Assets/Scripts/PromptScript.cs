@@ -15,6 +15,16 @@ public class PromptScript : MonoBehaviour
     private GameObject canvas;
     private UIScript UIScript;
 
+    // Reference to asteroid this prompt is from
+    private AsteroidScript asteroidReference;
+
+    // Property for getting or setting the asteroid reference
+    public AsteroidScript AsteroidReference
+    {
+        get { return asteroidReference; }
+        set { asteroidReference = value; }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +35,12 @@ public class PromptScript : MonoBehaviour
     //Spawns in a robot
     public void spawnRobot()
     {
-        Instantiate(mainRobot, asteroidPosition, new Quaternion());
+        // Spawn the robot and save it as a game object
+        GameObject spawnedRobot = Instantiate(mainRobot, asteroidPosition, new Quaternion());
+
+        // Set the asteroid reference of the spawned robot to the asteroid it is located on
+        spawnedRobot.GetComponent<Robot>().AsteroidReference = asteroidReference;
+
         UIScript.UpdateCurrency(-5);
         Destroy(gameObject);
     }

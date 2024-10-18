@@ -47,6 +47,8 @@ public class AsteroidScript : MonoBehaviour
             tempPrefab.GetComponent<PromptScript>().asteroidPosition = asteroidPosition;
             //Changes the tempPrefab's name to prevent errors
             tempPrefab.name = promptName;
+            // Sets the AsteroidReference of the prompt to this asteroid
+            tempPrefab.GetComponent<PromptScript>().AsteroidReference = this;
             ifObject = true; //Can't be clicked anymore
         }   
     }
