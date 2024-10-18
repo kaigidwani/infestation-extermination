@@ -93,7 +93,10 @@ public class Robot : MonoBehaviour
         AttemptShoot();
 
         // Update location to asteroid reference's location
-        transform.position = asteroidReference.transform.position;
+        // Sets the Z to 0 so it draws over asteroids
+        transform.position = new Vector3(asteroidReference.transform.position.x,
+            asteroidReference.transform.position.y,
+            0);
     }
 
     // Attempt to shoot an enemy in range
