@@ -3,6 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// ===============================
+// AUTHOR: Emmett
+// CREATE DATE: 9/?/24
+// PURPOSE: Spawn promopt
+// SPECIAL NOTES:
+// ===============================
+// Change History:
+//  10/19/24 - Now the prompt will spawn where the astroid was, so players can simply double click
+//==================================
+
 public class AsteroidScript : MonoBehaviour
 {
     //button pop up prefab
@@ -40,6 +50,8 @@ public class AsteroidScript : MonoBehaviour
     {
         if (ifObject == false && mode.Mode1 == Mode.BuildMode)
         {
+            //Changes poistion last fame so the player can simply double click
+            asteroidPosition = new Vector3(transform.position.x, transform.position.y, 0); //we may need to move this to update for the moving asteroids. But we'll cross that bridge when we get to it
             //Spawns a button, searches for that button, then parents it to the canvas and gives the asteroid position. 
             Instantiate(buttonPopUp, asteroidPosition, new Quaternion());
             //Looks for the instatiated prefab
