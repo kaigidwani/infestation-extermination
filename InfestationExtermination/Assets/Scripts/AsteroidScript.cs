@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-// ===============================
+// ================================
 // AUTHOR: Emmett
 // CREATE DATE: 9/?/24
 // PURPOSE: Spawn promopt
@@ -11,6 +11,7 @@ using UnityEngine.UI;
 // ===============================
 // Change History:
 //  10/19/24 - Now the prompt will spawn where the astroid was, so players can simply double click
+//  10/22/24 - I dunno this didn't push. 
 //==================================
 
 public class AsteroidScript : MonoBehaviour
@@ -65,6 +66,6 @@ public class AsteroidScript : MonoBehaviour
             // Sets the AsteroidReference of the prompt to this asteroid
             tempPrefab.GetComponent<PromptScript>().AsteroidReference = this;
             ifObject = true; //Can't be clicked anymore
-        }   
+        }
     }
 }
