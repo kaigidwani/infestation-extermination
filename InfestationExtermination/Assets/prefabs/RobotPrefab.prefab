@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20c4c6aa88f16ed45bd5231eb4414bf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cost: 5
   damage: 20
   range: 4
   rateOfFire: 2

@@ -41,7 +41,7 @@ public class PromptScript : MonoBehaviour
         // Set the asteroid reference of the spawned robot to the asteroid it is located on
         spawnedRobot.GetComponent<Robot>().AsteroidReference = asteroidReference;
 
-        UIScript.UpdateCurrency(-5);
+        UIScript.UpdateCurrency(spawnedRobot.GetComponent<Robot>().Cost * -1);
         Destroy(gameObject);
     }
 

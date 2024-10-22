@@ -5,8 +5,8 @@
 // SPECIAL NOTES:
 // ===============================
 // Change History:
+//  10/21/24 - Attempted to get gamemode working with this, start wave button does nothing right now
 //  10/9/24 - Added QuitButton()
-//
 //==================================
 
 using System.Collections;
@@ -18,9 +18,21 @@ public class ButtonUI : MonoBehaviour
 {
     [SerializeField] GameObject pauseMenu;
 
+    private GameObject canvas;
+    private GameMode mode;
+    private UIScript ui;
+
+    void Start()
+    {
+        canvas = GameObject.Find("Canvas");
+        mode = canvas.GetComponent<GameMode>();
+        ui = canvas.GetComponent<UIScript>();
+    }
+
     public void PlayButton()
     {
         SceneManager.LoadScene(1);
+        mode.Mode1 = Mode.BuildMode;
     }
 
     public void QuitButton()
@@ -36,17 +48,33 @@ public class ButtonUI : MonoBehaviour
     {
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
+        mode.Mode1 = Mode.Pause;
     }
 
     public void ResumeButton()
     {
         pauseMenu.SetActive(false);
         Time.timeScale = 1f;
+
+        if (ui.GameModeText.text == "Build Mode")
+        {
+            mode.Mode1 = Mode.BuildMode;
+        }
+        else
+        {
+            mode.Mode1 = Mode.WaveMode;
+        }
     }
 
     public void HomeButton()
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(0);
+    }
+
+    public void StartWave()
+    {
+        mode.Mode1 = Mode.WaveMode;
+        ui.UpdateGameMode();
     }
 }

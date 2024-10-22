@@ -12,6 +12,7 @@ using static UnityEngine.GraphicsBuffer;
 // SPECIAL NOTES:
 // ===============================
 // Change History:
+// 10/21/24 - I think that cost should be with the robot, I don't know how to get prompt not to work if you cannot afford robot (Justin Huang)
 // 10/16/24 - Rotation should be working, I do want to note that future robots should be drawn facing the same way 
 //            or we can just draw the original one facing up and future ones as well, so we can remove offset B (Justin Huang)
 // 10/16/24 - Added SFX
@@ -24,6 +25,9 @@ using static UnityEngine.GraphicsBuffer;
 public class Robot : MonoBehaviour
 {
     // Fields
+
+    // The cost of the turret
+    [SerializeField] private int cost;
 
     // The amount of damage the turret does in an attack
     [SerializeField] private int damage;
@@ -48,6 +52,13 @@ public class Robot : MonoBehaviour
 
 
     // Properties
+
+    // Getters and setter for turret cost
+    public int Cost
+    {
+        get { return cost; }
+        set { cost = value; }
+    }
 
     // Getters and setters for turret damage
     public int Damage

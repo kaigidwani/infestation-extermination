@@ -16,11 +16,14 @@ public class AsteroidScript : MonoBehaviour
     //Vector3 of the poisiton of asteroid
     public Vector3 asteroidPosition;
 
+    private GameMode mode;
+
     // Start is called before the first frame update
     void Start()
     {
         //Sets the canvas
         canvas = GameObject.Find("Canvas");
+        mode = canvas.GetComponent<GameMode>();
 
         //Gets the current position as well as changing the Z.
         asteroidPosition = new Vector3(transform.position.x, transform.position.y, 0); //we may need to move this to update for the moving asteroids. But we'll cross that bridge when we get to it
@@ -35,7 +38,7 @@ public class AsteroidScript : MonoBehaviour
     //For when it gets clicked 
     private void OnMouseDown()
     {
-        if (ifObject == false)
+        if (ifObject == false && mode.Mode1 == Mode.BuildMode)
         {
             //Spawns a button, searches for that button, then parents it to the canvas and gives the asteroid position. 
             Instantiate(buttonPopUp, asteroidPosition, new Quaternion());
