@@ -17,22 +17,29 @@ using UnityEngine.SceneManagement;
 public class ButtonUI : MonoBehaviour
 {
     [SerializeField] GameObject pauseMenu;
+    [SerializeField] GameObject startWaveButton;
 
     private GameObject canvas;
     private GameMode mode;
     private UIScript ui;
+    private EnemyManager enemyManager;
+
+    public GameObject StartWaveButton
+    {
+        get { return startWaveButton; }
+    }
 
     void Start()
     {
         canvas = GameObject.Find("Canvas");
         mode = canvas.GetComponent<GameMode>();
         ui = canvas.GetComponent<UIScript>();
+        enemyManager = GameObject.Find("EnemyManager").GetComponent<EnemyManager>();
     }
 
     public void PlayButton()
     {
         SceneManager.LoadScene(1);
-        mode.Mode1 = Mode.BuildMode;
     }
 
     public void QuitButton()
@@ -76,5 +83,7 @@ public class ButtonUI : MonoBehaviour
     {
         mode.Mode1 = Mode.WaveMode;
         ui.UpdateGameMode();
+        enemyManager.StartWave();
+        startWaveButton.SetActive(false);
     }
 }

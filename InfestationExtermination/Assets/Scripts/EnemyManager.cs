@@ -10,6 +10,7 @@ using UnityEngine;
 // SPECIAL NOTES:
 // ===============================
 // Change History:
+//  10/23/24 - Attempting to integrate game mode (Justin Huang)
 //  10/11/24 - Enemy should decrease health when they reached the end (Justin Huang)
 //  9/27/24 - Added Update behaviour to check if an enemy runs out of health and destroys them.
 //          - Added Spawning system using variables for how many enemies to spawn and how far apart to spawn them.            
@@ -42,8 +43,14 @@ public class EnemyManager : MonoBehaviour
     // Reference to the canvas
     private GameObject canvas;
 
-    // Reference to the UIScript object
+    // Reference to the UIScript Script
     private UIScript UIScript;
+
+    // Reference to the GameMode Script
+    private GameMode GameMode;
+
+    // Reference to the ButtonUI Script
+    private ButtonUI ButtonUI;
 
     // === Properties ===
 
@@ -61,24 +68,10 @@ public class EnemyManager : MonoBehaviour
     {
         Debug.Log("Started!");
 
-        for (int i = 0; i < amountOfEnemies; i++)
-        {
-            // Spawn in a bug at a point incrementally upward
-            EnemiesList.Add(
-                Instantiate(
-                    BugPrefab,
-                    new Vector3(
-                        bugSpawnPoint.x,
-                        bugSpawnPoint.y + distanceBetweenEnemies * i,
-                        bugSpawnPoint.z
-                        ),
-                    Quaternion.identity
-                    )
-                );
-        }
-
         canvas = GameObject.Find("Canvas");
         UIScript = canvas.GetComponent<UIScript>();
+        GameMode = canvas.GetComponent<GameMode>();
+        ButtonUI = canvas.GetComponent<ButtonUI>();
     }
 
     // Update is called once per frame
@@ -108,6 +101,34 @@ public class EnemyManager : MonoBehaviour
 
             // Delete the enemy from the scene
             Destroy(enemy);
+        }
+
+        // When enemy list is empty
+        if (enemiesList.Count == 0 && GameMode.Mode1 == Mode.WaveMode)
+        {
+            GameMode.Mode1 = Mode.BuildMode;
+            UIScript.UpdateCurrency(3);
+            UIScript.UpdateGameMode();
+            ButtonUI.StartWaveButton.SetActive(true);
+        }
+    }
+
+    public void StartWave()
+    {
+        for (int i = 0; i < amountOfEnemies; i++)
+        {
+           // Spawn in a bug at a point incrementally upward
+           EnemiesList.Add(
+               Instantiate(
+                   BugPrefab,
+                   new Vector3(
+                       bugSpawnPoint.x,
+                       bugSpawnPoint.y + distanceBetweenEnemies * i,
+                       bugSpawnPoint.z
+                       ),
+                   Quaternion.identity
+                   )
+               );
         }
     }
 }

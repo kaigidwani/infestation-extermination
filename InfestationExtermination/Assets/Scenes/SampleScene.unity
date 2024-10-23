@@ -1087,6 +1087,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 1921237417}
+  startWaveButton: {fileID: 1245127529}
 --- !u!114 &639271958
 MonoBehaviour:
   m_ObjectHideFlags: 0
