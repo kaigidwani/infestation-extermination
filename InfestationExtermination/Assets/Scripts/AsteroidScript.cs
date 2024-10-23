@@ -24,6 +24,7 @@ public class AsteroidScript : MonoBehaviour
     public GameObject canvas;
     //bool to check if object on the asteroid
     public bool ifObject;
+
     //Vector3 of the poisiton of asteroid
     public Vector3 asteroidPosition;
 
@@ -49,7 +50,7 @@ public class AsteroidScript : MonoBehaviour
     //For when it gets clicked 
     private void OnMouseDown()
     {
-        if (ifObject == false && mode.Mode1 == Mode.BuildMode)
+        if (ifObject == false && mode.Mode1 != Mode.Pause)
         {
             //Changes poistion last fame so the player can simply double click
             asteroidPosition = new Vector3(transform.position.x, transform.position.y, 0); //we may need to move this to update for the moving asteroids. But we'll cross that bridge when we get to it
@@ -65,7 +66,7 @@ public class AsteroidScript : MonoBehaviour
             tempPrefab.name = promptName;
             // Sets the AsteroidReference of the prompt to this asteroid
             tempPrefab.GetComponent<PromptScript>().AsteroidReference = this;
-            ifObject = true; //Can't be clicked anymore
+            ifObject = true;
         }
     }
 }

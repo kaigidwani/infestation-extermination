@@ -35,14 +35,26 @@ public class PromptScript : MonoBehaviour
     //Spawns in a robot
     public void spawnRobot()
     {
-        // Spawn the robot and save it as a game object
-        GameObject spawnedRobot = Instantiate(mainRobot, asteroidPosition, new Quaternion());
 
-        // Set the asteroid reference of the spawned robot to the asteroid it is located on
-        spawnedRobot.GetComponent<Robot>().AsteroidReference = asteroidReference;
 
-        UIScript.UpdateCurrency(spawnedRobot.GetComponent<Robot>().Cost * -1);
-        Destroy(gameObject);
+        if (UIScript.Currency >= mainRobot.GetComponent<Robot>().Cost)
+        {
+            // Spawn the robot and save it as a game object
+            GameObject spawnedRobot = Instantiate(mainRobot, asteroidPosition, new Quaternion());
+
+            // Set the asteroid reference of the spawned robot to the asteroid it is located on
+            spawnedRobot.GetComponent<Robot>().AsteroidReference = asteroidReference;
+
+            UIScript.UpdateCurrency(mainRobot.GetComponent<Robot>().Cost * -1);
+            Destroy(gameObject);
+            
+        }
+        else
+        {
+            Debug.Log("Not Enough Currency");
+            Destroy(gameObject);
+            asteroidReference.ifObject = false;
+        }
     }
 
     // Update is called once per frame

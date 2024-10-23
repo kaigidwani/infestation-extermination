@@ -13,6 +13,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.AI;
 
 public class UIScript : MonoBehaviour
 {
@@ -30,6 +31,11 @@ public class UIScript : MonoBehaviour
     public TextMeshProUGUI HealthText
     {
         get => healthText;
+    }
+
+    public int Currency
+    {
+        get => currency;
     }
 
     public TextMeshProUGUI CurrencyText
