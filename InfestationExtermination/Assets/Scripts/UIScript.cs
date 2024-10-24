@@ -20,9 +20,11 @@ public class UIScript : MonoBehaviour
     // Variables
     private int health = 0;
     private int currency = 0;
+    private bool lose = false;
     [SerializeField] private TextMeshProUGUI healthText;
     [SerializeField] private TextMeshProUGUI currencyText;
     [SerializeField] private TextMeshProUGUI gameModeText;
+    [SerializeField] private GameObject gameOver;
 
     private GameObject canvas;
     private GameMode mode;
@@ -58,6 +60,16 @@ public class UIScript : MonoBehaviour
         UpdateHealth(0);
         UpdateCurrency(0);
         UpdateGameMode();
+    }
+
+    void Update()
+    {
+        if (health <= 0 && lose == false)
+        {
+            Time.timeScale = 0f;
+            lose = true;
+            gameOver.SetActive(true);
+        }
     }
 
     public void UpdateHealth(int number)

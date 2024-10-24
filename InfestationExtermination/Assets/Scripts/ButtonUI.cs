@@ -75,8 +75,14 @@ public class ButtonUI : MonoBehaviour
 
     public void HomeButton()
     {
-        Time.timeScale = 1f;
         SceneManager.LoadScene(0);
+        Time.timeScale = 1f;
+    }
+
+    public void RestartButton()
+    {
+        SceneManager.LoadScene(1);
+        Time.timeScale = 1f;
     }
 
     public void StartWave()
