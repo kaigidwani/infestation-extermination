@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
@@ -12,6 +13,7 @@ using static UnityEngine.GraphicsBuffer;
 // SPECIAL NOTES:
 // ===============================
 // Change History:
+// 10/24/24 - Added in a function with shooting and changing the sprite when it does shoot. Should be future proof if we make another robot prefab. 
 // 10/21/24 - I think that cost should be with the robot, I don't know how to get prompt not to work if you cannot afford robot (Justin Huang)
 // 10/16/24 - Rotation should be working, I do want to note that future robots should be drawn facing the same way 
 //            or we can just draw the original one facing up and future ones as well, so we can remove offset B (Justin Huang)
@@ -39,7 +41,10 @@ public class Robot : MonoBehaviour
     [SerializeField] private float rateOfFire;
 
     // Last used time
-    private float lastShotTime;
+    [SerializeField] private float lastShotTime;
+
+    // Cool down time
+    [SerializeField] private float coolDown;
 
     // The enemy manager
     [SerializeField] private GameObject enemyManager;
@@ -49,6 +54,11 @@ public class Robot : MonoBehaviour
 
     // Reference to asteroid that this tower is placed onto
     private AsteroidScript asteroidReference;
+
+    //Sprites for firing
+    [SerializeField] private Sprite idleSprite;
+    [SerializeField] private Sprite shootingSprite;
+    [SerializeField] private Sprite coolDownSprite;
 
 
     // Properties
@@ -95,6 +105,7 @@ public class Robot : MonoBehaviour
     {
         enemyManager = GameObject.Find("EnemyManager");
 
+        coolDown = 999;
     }
 
     // Update is called once per frame
@@ -102,6 +113,11 @@ public class Robot : MonoBehaviour
     {
         // Attempt to shoot an enemy
         AttemptShoot();
+
+        //Counts over time
+        coolDown += Time.deltaTime;
+
+        SpriteChange();
 
         // Update location to asteroid reference's location
         // Sets the Z to 0 so it draws over asteroids
@@ -195,6 +211,26 @@ public class Robot : MonoBehaviour
 
         //Plays audio
         shootSFX.Play();
+
+        //Resets cool down timer
+        coolDown = 0;
+    }
+
+    //Changes the sprite based on lastShotTime
+    void SpriteChange()
+    {
+        if (coolDown > rateOfFire)
+        {
+            GetComponent<SpriteRenderer>().sprite = idleSprite;
+        }
+        else if(coolDown > shootSFX.time)
+        {
+            GetComponent<SpriteRenderer>().sprite = coolDownSprite;
+        }
+        else
+        {
+            GetComponent<SpriteRenderer>().sprite = shootingSprite;
+        }
     }
 
     // Draw the Gizmos
