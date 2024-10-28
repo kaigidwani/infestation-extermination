@@ -13,8 +13,9 @@ using static UnityEngine.GraphicsBuffer;
 // SPECIAL NOTES:
 // ===============================
 // Change History:
+// 10/28/24 - I added a line renderer some stuff needs fixing, some bugs
 // 10/24/24 - Added in a function with shooting and changing the sprite when it does shoot. Should be future proof if we make another robot prefab. 
-// 10/21/24 - I think that cost should be with the robot, I don't know how to get prompt not to work if you cannot afford robot (Justin Huang)
+// 10/21/24 - I think that cost should be with the robot (Justin Huang)
 // 10/16/24 - Rotation should be working, I do want to note that future robots should be drawn facing the same way 
 //            or we can just draw the original one facing up and future ones as well, so we can remove offset B (Justin Huang)
 // 10/16/24 - Added SFX
@@ -60,7 +61,11 @@ public class Robot : MonoBehaviour
     [SerializeField] private Sprite shootingSprite;
     [SerializeField] private Sprite coolDownSprite;
 
-
+    // Line Rendering Stuff
+    private LineRenderer lineRenderer;
+    private Transform[] linePositions = new Transform [2];
+    private float lineFadeTime;
+        
     // Properties
 
     // Getters and setter for turret cost
@@ -105,7 +110,11 @@ public class Robot : MonoBehaviour
     {
         enemyManager = GameObject.Find("EnemyManager");
 
+        lineRenderer = GetComponent<LineRenderer>();
+        linePositions[0] = transform;
+
         coolDown = 999;
+        lineFadeTime = 0;
     }
 
     // Update is called once per frame
@@ -124,6 +133,22 @@ public class Robot : MonoBehaviour
         transform.position = new Vector3(asteroidReference.transform.position.x,
             asteroidReference.transform.position.y,
             0);
+
+        if (lineRenderer.enabled)
+        {
+            lineFadeTime += Time.deltaTime;
+
+            for (int i = 0; i < 2; i++)
+            {
+                lineRenderer.SetPosition(i, linePositions[i].position);
+            }
+
+            if (lineFadeTime > 0.2)
+            {
+                lineFadeTime = 0;
+                lineRenderer.enabled = false;
+            }
+        }
     }
 
     // Attempt to shoot an enemy in range
@@ -214,6 +239,10 @@ public class Robot : MonoBehaviour
 
         //Resets cool down timer
         coolDown = 0;
+
+        // Add bug to line and enable line
+        linePositions[1] = enemy.transform;
+        lineRenderer.enabled = true;
     }
 
     //Changes the sprite based on lastShotTime
