@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Bug : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class Bug : MonoBehaviour
     [SerializeField] private GameObject thisBug; // The bug this script is attached to
 
     [SerializeField] private int health; // Amount of health a bug has
+    [SerializeField] private float healthMax; // Max amount of health a bug has at start
     [SerializeField] private int damage; // Amount of damage a bug does in an attack
 
     [SerializeField] private float speed = 1.0f; // Speed that the bug will move at
@@ -17,12 +19,12 @@ public class Bug : MonoBehaviour
     private Transform target; // Variable to hold target position
     private int positionIndex; // Current index of position list
 
+    [SerializeField] private Image hBar; //health bar
 
+// --- Properties ---
 
-    // --- Properties ---
-
-    // Getters and setters for health amount
-    public int Health
+// Getters and setters for health amount
+public int Health
     {
         get { return health; }
         set { health = value; }
@@ -62,8 +64,9 @@ public class Bug : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Initialize the health
+        // Initialize the health and max health
         health = 40;
+        healthMax = health;
 
         // Initalize the damage
         damage = 10;
@@ -107,5 +110,8 @@ public class Bug : MonoBehaviour
     {
         // Reduce health by the amount of damage
         health -= damage;
+        //Temp float so a fraction can be calculated. Can be removed if we change health to a float
+        float fhealth = health;
+        hBar.fillAmount = health / healthMax;
     }
 }
