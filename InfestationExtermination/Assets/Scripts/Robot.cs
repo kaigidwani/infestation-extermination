@@ -138,15 +138,18 @@ public class Robot : MonoBehaviour
         {
             lineFadeTime += Time.deltaTime;
 
-            for (int i = 0; i < 2; i++)
-            {
-                lineRenderer.SetPosition(i, linePositions[i].position);
-            }
-
             if (lineFadeTime > 0.2)
             {
                 lineFadeTime = 0;
                 lineRenderer.enabled = false;
+            }
+
+            for (int i = 0; i < 2; i++)
+            {
+                if (linePositions[i] != null)
+                {
+                    lineRenderer.SetPosition(i, linePositions[i].position);
+                }
             }
         }
     }
