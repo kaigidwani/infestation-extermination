@@ -11,6 +11,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -18,6 +19,7 @@ public class ButtonUI : MonoBehaviour
 {
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject startWaveButton;
+    [SerializeField] TextMeshProUGUI startWaveButtonText;
 
     private GameObject canvas;
     private GameMode mode;
@@ -26,7 +28,13 @@ public class ButtonUI : MonoBehaviour
 
     public GameObject StartWaveButton
     {
-        get { return startWaveButton; }
+        get => startWaveButton;
+    }
+
+    public TextMeshProUGUI StartWaveButtonText
+    {
+        get => startWaveButtonText;
+        set => startWaveButtonText = value;
     }
 
     void Start()

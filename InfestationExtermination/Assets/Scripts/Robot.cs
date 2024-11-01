@@ -163,7 +163,7 @@ public class Robot : MonoBehaviour
             lastShotTime = Time.time;
 
             // Print a debug log that we are going to try to shoot
-            Debug.Log("Attempting to shoot!");
+            // Debug.Log("Attempting to shoot!");
 
             // If there is at least one enemy alive
             if (enemyManager.GetComponent<EnemyManager>().EnemiesList.Count > 0)
@@ -227,7 +227,7 @@ public class Robot : MonoBehaviour
         enemy.GetComponent<Bug>().TakeDamage(damage);
 
         // Debug to show when fired
-        Debug.Log("Fired!");
+        // Debug.Log("Fired!");
 
         //Calculates the rotation needed for the robot based on the robot's positions (KINDA BROKEN)
         Vector3 offsetA = enemy.transform.position - transform.position;

@@ -5,6 +5,7 @@
 // SPECIAL NOTES:
 // ===============================
 // Change History:
+//  10/31/24 - Adding some other stuff, forgot to update some other stuff up here, oof!
 //  10/21/24 - Attempted to get gamemode working with this
 //  10/11/24 - Made the methods public
 //==================================
@@ -25,9 +26,11 @@ public class UIScript : MonoBehaviour
     [SerializeField] private TextMeshProUGUI currencyText;
     [SerializeField] private TextMeshProUGUI gameModeText;
     [SerializeField] private GameObject gameOver;
+    [SerializeField] private GameObject gameWin;
 
     private GameObject canvas;
     private GameMode mode;
+    private EnemyManager enemyManager;
 
     // Properties
     public TextMeshProUGUI HealthText
@@ -54,6 +57,7 @@ public class UIScript : MonoBehaviour
     {
         canvas = GameObject.Find("Canvas");
         mode = canvas.GetComponent<GameMode>();
+        enemyManager = GameObject.Find("EnemyManager").GetComponent<EnemyManager>();
 
         health = 5;
         currency = 10;
@@ -69,6 +73,11 @@ public class UIScript : MonoBehaviour
             Time.timeScale = 0f;
             lose = true;
             gameOver.SetActive(true);
+        }
+
+        if (enemyManager.WaveNumber == 6)
+        {
+            gameWin.SetActive(true);
         }
     }
 
@@ -92,7 +101,7 @@ public class UIScript : MonoBehaviour
         }
         else if (mode.Mode1 == Mode.WaveMode)
         {
-            gameModeText.text = "Wave 0";
+            gameModeText.text = "Wave " + enemyManager.WaveNumber;
         }
     }
 }
