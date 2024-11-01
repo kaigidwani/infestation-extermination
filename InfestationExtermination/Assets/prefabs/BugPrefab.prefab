@@ -113,6 +113,7 @@ MonoBehaviour:
   - {x: 7.8, y: 2.52, z: 0}
   targetObject: {fileID: 5609215594693418302, guid: 62a1c4a215f8c98419c2b2c06fa92528, type: 3}
   hBar: {fileID: 8866532190148013035}
+  rewardAmount: 1
 --- !u!1 &6663483158833061670
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,6 +21,8 @@ public class Bug : MonoBehaviour
 
     [SerializeField] private Image hBar; //health bar
 
+    [SerializeField] private int rewardAmount; // How many crystals the player gains for killing this enemy
+
 // --- Properties ---
 
 // Getters and setters for health amount
@@ -59,6 +61,13 @@ public int Health
         get { return positions.Count; }
     }
 
+    // Getter for reward amount
+    public int RewardAmount
+    {
+        get { return rewardAmount; }
+    }
+
+
     // --- Methods ---
 
     // Start is called before the first frame update
@@ -67,9 +76,6 @@ public int Health
         // Initialize the health and max health
         health = 40;
         healthMax = health;
-
-        // Initalize the damage
-        damage = 10;
 
         // Set position index to 0
         positionIndex = 0;

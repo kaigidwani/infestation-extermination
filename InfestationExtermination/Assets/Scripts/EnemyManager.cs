@@ -11,6 +11,7 @@ using UnityEngine;
 // SPECIAL NOTES:
 // ===============================
 // Change History:
+//  10/31/24 - Added support for different currency rewards and damage amounts
 //  10/31/24 - Incremental Waves (Justin Huang) Note: Not Really Good Way?
 //  10/23/24 - Attempting to integrate game mode (Justin Huang)
 //  10/11/24 - Enemy should decrease health when they reached the end (Justin Huang)
@@ -90,17 +91,24 @@ public class EnemyManager : MonoBehaviour
         // Loop through every enemy and check if its health is <= 0
         foreach (GameObject enemy in EnemiesList)
         {
-            // If the enemy is out of health
+            // If the enemy is out of health, destroy the enemy and reward the player
             if (enemy.GetComponent<Bug>().Health <= 0)
             {
                 // Add the enemy to the list of enemies to destroy
                 enemiesToDestroy.Add(enemy);
-                UIScript.UpdateCurrency(1);
+
+                // Reward the amount of currency to the player
+                UIScript.UpdateCurrency(enemy.GetComponent<Bug>().RewardAmount);
             }
+
+            // If the enemy reaches the end of the path, destroy the enemy and damage the player
             if (enemy.GetComponent<Bug>().PositionIndex == enemy.GetComponent<Bug>().PositionCount)
             {
+                // Add the enemy to the list of enemies to destroy
                 enemiesToDestroy.Add(enemy);
-                UIScript.UpdateHealth(-1);
+
+                // Damage the player by how much damage the enemy does
+                UIScript.UpdateHealth(-enemy.GetComponent<Bug>().Damage);
             }
         }
 
