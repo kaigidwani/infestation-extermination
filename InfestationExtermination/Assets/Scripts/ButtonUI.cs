@@ -14,17 +14,26 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
+public enum HotBar
+{
+    item1,
+    none
+}
 public class ButtonUI : MonoBehaviour
 {
-    [SerializeField] GameObject pauseMenu;
-    [SerializeField] GameObject startWaveButton;
-    [SerializeField] TextMeshProUGUI startWaveButtonText;
+    [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject startWaveButton;
+    [SerializeField] private TextMeshProUGUI startWaveButtonText;
 
     private GameObject canvas;
     private GameMode mode;
     private UIScript ui;
     private EnemyManager enemyManager;
+
+    private HotBar hotBar = HotBar.none;
+    [SerializeField] private Button[] hotBarButtons;
 
     public GameObject StartWaveButton
     {
@@ -35,6 +44,12 @@ public class ButtonUI : MonoBehaviour
     {
         get => startWaveButtonText;
         set => startWaveButtonText = value;
+    }
+
+    public HotBar HotBar1
+    {
+        get => hotBar;
+        set => hotBar = value;
     }
 
     void Start()
@@ -99,5 +114,24 @@ public class ButtonUI : MonoBehaviour
         ui.UpdateGameMode();
         enemyManager.StartWave();
         startWaveButton.SetActive(false);
+    }
+
+    public void Item1()
+    {
+        if (hotBar != HotBar.item1)
+        {
+            for (int i = 0; i < hotBarButtons.Length; i++)
+            {
+                hotBarButtons[i].image.color = Color.white;
+            }
+
+            hotBar = HotBar.item1;
+            hotBarButtons[0].image.color = Color.green;
+        }
+        else
+        {
+            hotBar = HotBar.none;
+            hotBarButtons[0].image.color = Color.white;
+        }
     }
 }
