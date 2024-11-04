@@ -108,7 +108,7 @@ MonoBehaviour:
   enemyManager: {fileID: 3088432794633821753, guid: fe354c7838a0c144eaaac3a5948a202a, type: 3}
   shootSFX: {fileID: 8924826482262955372}
   idleSprite: {fileID: 21300000, guid: 7803f1fbbcd45de488d5fda7ca6e288c, type: 3}
-  shootingSprite: {fileID: 21300000, guid: fc54320d4bc510c43b23c55ef01796e5, type: 3}
+  shootingSprite: {fileID: 21300000, guid: b1f61e15eeb57d04184d6756595b937d, type: 3}
   coolDownSprite: {fileID: 21300000, guid: 9106517cfb3f6e348812cc9afcc0e85c, type: 3}
 --- !u!82 &8924826482262955372
 AudioSource:
