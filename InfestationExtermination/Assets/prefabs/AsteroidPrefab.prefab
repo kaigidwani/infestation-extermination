@@ -103,6 +103,7 @@ MonoBehaviour:
   canvas: {fileID: 0}
   ifObject: 0
   asteroidPosition: {x: 0, y: 0, z: 0}
+  robot: {fileID: 2170266940768323529, guid: 08ff5b644ddbb5d499f08a1d9498f381, type: 3}
 --- !u!61 &-8907401092879190532
 BoxCollider2D:
   m_ObjectHideFlags: 0

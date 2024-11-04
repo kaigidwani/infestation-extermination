@@ -32,8 +32,10 @@ public class ButtonUI : MonoBehaviour
     private UIScript ui;
     private EnemyManager enemyManager;
 
-    private HotBar hotBar = HotBar.none;
+    private HotBar hotBar;
     [SerializeField] private Button[] hotBarButtons;
+
+    bool singlePress;
 
     public GameObject StartWaveButton
     {
@@ -58,6 +60,28 @@ public class ButtonUI : MonoBehaviour
         mode = canvas.GetComponent<GameMode>();
         ui = canvas.GetComponent<UIScript>();
         enemyManager = GameObject.Find("EnemyManager").GetComponent<EnemyManager>();
+
+        hotBar = HotBar.none;
+        singlePress = false;
+    }
+
+    void Update()
+    {
+        if (!singlePress)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                singlePress = true;
+                Item1();
+            }
+        }
+        else
+        {
+            if (Input.anyKey == false)
+            {
+                singlePress = false;
+            }
+        }
     }
 
     public void PlayButton()

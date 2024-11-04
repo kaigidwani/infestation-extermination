@@ -10,6 +10,7 @@ using UnityEngine.UI;
 // SPECIAL NOTES:
 // ===============================
 // Change History:
+//  11/4/24 - Changed how spawning works - Justin Huang
 //  10/19/24 - Now the prompt will spawn where the astroid was, so players can simply double click
 //  10/22/24 - I dunno this didn't push. 
 //==================================
@@ -77,7 +78,7 @@ public class AsteroidScript : MonoBehaviour
         //    ifObject = true;
         //}
 
-        if (UIScript.Currency >= robot.GetComponent<Robot>().Cost && buttonUI.HotBar1 == HotBar.item1)
+        if (UIScript.Currency >= robot.GetComponent<Robot>().Cost && buttonUI.HotBar1 == HotBar.item1 && ifObject == false)
         {
             // Spawn the robot and save it as a game object
             GameObject spawnedRobot = Instantiate(robot, asteroidPosition, new Quaternion());
@@ -86,6 +87,8 @@ public class AsteroidScript : MonoBehaviour
             spawnedRobot.GetComponent<Robot>().AsteroidReference = this;
 
             UIScript.UpdateCurrency(robot.GetComponent<Robot>().Cost * -1);
+
+            ifObject = true;
         }
         else
         {
