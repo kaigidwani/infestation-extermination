@@ -74,7 +74,6 @@ public int Health
     void Start()
     {
         // Initialize the health and max health
-        health = 40;
         healthMax = health;
 
         // Set position index to 0

@@ -10,7 +10,8 @@ using UnityEngine;
 // PURPOSE: Manage the enemies using a manager
 // SPECIAL NOTES:
 // ===============================
-// Change History:
+// Change History://
+//  11/6/24 - Added in a wave system that uses lists instead of a count. Only works for wave 2 but I will change it to work for other waves. 
 //  10/31/24 - Added support for different currency rewards and damage amounts
 //  10/31/24 - Incremental Waves (Justin Huang) Note: Not Really Good Way?
 //  10/23/24 - Attempting to integrate game mode (Justin Huang)
@@ -29,6 +30,9 @@ public class EnemyManager : MonoBehaviour
 
     // Prefab for bug enemy
     [SerializeField] private GameObject BugPrefab;
+
+    // Prefab for heavy bug enemy
+    [SerializeField] private GameObject HeavyBugPrefab;
 
     // Spawn point for bugs
     [SerializeField] private Vector3 bugSpawnPoint;
@@ -57,6 +61,9 @@ public class EnemyManager : MonoBehaviour
     // Reference to the ButtonUI Script
     private ButtonUI ButtonUI;
 
+    // Wave 2 (Testing array method)
+    [SerializeField] private List<GameObject> wave2Bugs;
+
     // === Properties ===
 
     // Gets the enemies list
@@ -81,6 +88,9 @@ public class EnemyManager : MonoBehaviour
         UIScript = canvas.GetComponent<UIScript>();
         GameMode = canvas.GetComponent<GameMode>();
         ButtonUI = canvas.GetComponent<ButtonUI>();
+
+        //Sets the wave 2 bugs. Will probably be changed later
+        wave2Bugs = new List<GameObject> { HeavyBugPrefab, BugPrefab, BugPrefab, BugPrefab, BugPrefab};
 
         waveNumber = 1;
     }
@@ -160,6 +170,25 @@ public class EnemyManager : MonoBehaviour
             amountOfEnemies = 25;
         }
 
+        if (waveNumber == 2)
+        {
+            for (int i = 0; i < wave2Bugs.Count; i++)
+            {
+                EnemiesList.Add(
+                    Instantiate(
+                        wave2Bugs[i],
+                        new Vector3(
+                            bugSpawnPoint.x,
+                            bugSpawnPoint.y + distanceBetweenEnemies * i,
+                            bugSpawnPoint.z
+                            ),
+                        Quaternion.identity
+        )
+    );
+            }
+        }
+        else
+        {
         for (int i = 0; i < amountOfEnemies; i++)
         {
            // Spawn in a bug at a point incrementally upward
@@ -174,6 +203,7 @@ public class EnemyManager : MonoBehaviour
                    Quaternion.identity
                    )
                );
+        }
         }
     }
 }
