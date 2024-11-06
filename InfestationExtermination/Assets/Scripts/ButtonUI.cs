@@ -14,17 +14,28 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
+public enum HotBar
+{
+    item1,
+    none
+}
 public class ButtonUI : MonoBehaviour
 {
-    [SerializeField] GameObject pauseMenu;
-    [SerializeField] GameObject startWaveButton;
-    [SerializeField] TextMeshProUGUI startWaveButtonText;
+    [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject startWaveButton;
+    [SerializeField] private TextMeshProUGUI startWaveButtonText;
 
     private GameObject canvas;
     private GameMode mode;
     private UIScript ui;
     private EnemyManager enemyManager;
+
+    private HotBar hotBar;
+    [SerializeField] private Button[] hotBarButtons;
+
+    bool singlePress;
 
     public GameObject StartWaveButton
     {
@@ -37,14 +48,43 @@ public class ButtonUI : MonoBehaviour
         set => startWaveButtonText = value;
     }
 
+    public HotBar HotBar1
+    {
+        get => hotBar;
+        set => hotBar = value;
+    }
+
     void Start()
     {
         canvas = GameObject.Find("Canvas");
         mode = canvas.GetComponent<GameMode>();
         ui = canvas.GetComponent<UIScript>();
         enemyManager = GameObject.Find("EnemyManager").GetComponent<EnemyManager>();
+
+        hotBar = HotBar.none;
+        singlePress = false;
     }
 
+    void Update()
+    {
+        if (!singlePress)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                singlePress = true;
+                Item1();
+            }
+        }
+        else
+        {
+            if (Input.anyKey == false)
+            {
+                singlePress = false;
+            }
+        }
+    }
+
+    // Start Screen Buttons
     public void PlayButton()
     {
         SceneManager.LoadScene(1);
@@ -59,6 +99,7 @@ public class ButtonUI : MonoBehaviour
         Application.Quit();
     }
 
+    // Pause Screen Buttons
     public void PauseButton()
     {
         pauseMenu.SetActive(true);
@@ -93,6 +134,27 @@ public class ButtonUI : MonoBehaviour
         Time.timeScale = 1f;
     }
 
+    // Hot Bar Buttons
+    public void Item1()
+    {
+        if (hotBar != HotBar.item1)
+        {
+            for (int i = 0; i < hotBarButtons.Length; i++)
+            {
+                hotBarButtons[i].image.color = Color.white;
+            }
+
+            hotBar = HotBar.item1;
+            hotBarButtons[0].image.color = Color.green;
+        }
+        else
+        {
+            hotBar = HotBar.none;
+            hotBarButtons[0].image.color = Color.white;
+        }
+    }
+
+    // Other Buttons
     public void StartWave()
     {
         mode.Mode1 = Mode.WaveMode;
