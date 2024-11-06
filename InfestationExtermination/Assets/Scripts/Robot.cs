@@ -73,8 +73,12 @@ public class Robot : MonoBehaviour
     private TextMeshProUGUI damageText;
     private TextMeshProUGUI fireRateText;
     private TextMeshProUGUI rangeText;
-    private TextMeshProUGUI upgradeCostText;
-    private int upgradeCost;
+    private TextMeshProUGUI upgradeTextDamage;
+    private int upgradeCostDamage;
+    private TextMeshProUGUI upgradeTextFireRate;
+    private int upgradeCostFireRate;
+    private TextMeshProUGUI upgradeTextRange;
+    private int upgradeCostRange;
 
     private Button damageUpgradeButton;
     private Button fireRateUpgradeButton;
@@ -134,8 +138,12 @@ public class Robot : MonoBehaviour
         damageText = GameObject.Find("damage text").GetComponent<TextMeshProUGUI>();
         fireRateText = GameObject.Find("fire rate text").GetComponent<TextMeshProUGUI>();
         rangeText = GameObject.Find("range text").GetComponent<TextMeshProUGUI>();
-        upgradeCostText = GameObject.Find("upgrade cost text").GetComponent<TextMeshProUGUI>();
-        upgradeCost = 2;
+        upgradeTextDamage = GameObject.Find("damage upgrade cost text").GetComponent<TextMeshProUGUI>();
+        upgradeCostDamage = 2;
+        upgradeTextFireRate = GameObject.Find("fire rate upgrade cost text").GetComponent<TextMeshProUGUI>();
+        upgradeCostFireRate = 2;
+        upgradeTextRange = GameObject.Find("range upgrade cost text").GetComponent<TextMeshProUGUI>();
+        upgradeCostRange = 2;
 
         damageUpgradeButton = GameObject.Find("damage upgrade button").GetComponent<Button>();
         fireRateUpgradeButton = GameObject.Find("fire rate upgrade button").GetComponent<Button>();
@@ -309,7 +317,7 @@ public class Robot : MonoBehaviour
     // This should pull over the stat screen and display stats
     private void OnMouseDown()
     {
-        statScreen.transform.position = new Vector3(8.5f, 0, 0);
+        statScreen.transform.position = new Vector3(6.6666f, 0, 0);
         UpdateStatScreen();
         
         if (damageUpgradeButton.onClick != null)
@@ -343,7 +351,9 @@ public class Robot : MonoBehaviour
         damageText.text = "Damage: " + damage;
         fireRateText.text = "Fire Rate: " + (1 / rateOfFire);
         rangeText.text = "Range: " + range;
-        upgradeCostText.text = "Upgrade Cost: " + upgradeCost;
+        upgradeTextDamage.text = "" + upgradeCostDamage;
+        upgradeTextFireRate.text = "" + upgradeCostFireRate;
+        upgradeTextRange.text = "" + upgradeCostRange;
     }
 
     // Stat Screen Buttons
@@ -354,41 +364,33 @@ public class Robot : MonoBehaviour
 
     public void UpgradeDamage()
     {
-        if (UIScript.Currency >= upgradeCost)
+        if (UIScript.Currency >= upgradeCostDamage)
         {
             damage += 10;
-            UIScript.UpdateCurrency(-upgradeCost);
-            upgradeCost += 2;
+            UIScript.UpdateCurrency(-upgradeCostDamage);
+            upgradeCostDamage += 2;
             UpdateStatScreen();
-        }
-        else
-        {
-
         }
     }
 
     public void UpgradeFireRate()
     {
-        if (rateOfFire > 1 && UIScript.Currency >= upgradeCost)
+        if (rateOfFire > 1 && UIScript.Currency >= upgradeCostFireRate)
         {
-            rateOfFire -= 0.2f;
-            UIScript.UpdateCurrency(-upgradeCost);
-            upgradeCost += 2;
+            rateOfFire -= 0.3f;
+            UIScript.UpdateCurrency(-upgradeCostFireRate);
+            upgradeCostFireRate += 2;
             UpdateStatScreen();
-        }
-        else
-        {
-            // something
         }
     }
 
     public void UpgradeRange()
     {
-        if (range < 10 && UIScript.Currency >= upgradeCost)
+        if (range < 10 && UIScript.Currency >= upgradeCostRange)
         {
             range += 1;
-            UIScript.UpdateCurrency(-upgradeCost);
-            upgradeCost += 2;
+            UIScript.UpdateCurrency(-upgradeCostRange);
+            upgradeCostRange += 2;
             UpdateStatScreen();
         }
         else
