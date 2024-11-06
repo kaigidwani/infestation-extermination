@@ -5,6 +5,7 @@ using TMPro;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using static UnityEngine.GraphicsBuffer;
 
 // ===============================
@@ -75,6 +76,11 @@ public class Robot : MonoBehaviour
     private TextMeshProUGUI upgradeCostText;
     private int upgradeCost;
 
+    private Button damageUpgradeButton;
+    private Button fireRateUpgradeButton;
+    private Button rangeUpgradeButton;
+    private Button closeButton;
+
     private UIScript UIScript;
 
     // Properties
@@ -130,6 +136,11 @@ public class Robot : MonoBehaviour
         rangeText = GameObject.Find("range text").GetComponent<TextMeshProUGUI>();
         upgradeCostText = GameObject.Find("upgrade cost text").GetComponent<TextMeshProUGUI>();
         upgradeCost = 2;
+
+        damageUpgradeButton = GameObject.Find("damage upgrade button").GetComponent<Button>();
+        fireRateUpgradeButton = GameObject.Find("fire rate upgrade button").GetComponent<Button>();
+        rangeUpgradeButton = GameObject.Find("range upgrade button").GetComponent<Button>();
+        closeButton = GameObject.Find("close button").GetComponent<Button>();
 
         UIScript = GameObject.Find("Canvas").GetComponent<UIScript>();
 
@@ -298,14 +309,39 @@ public class Robot : MonoBehaviour
     // This should pull over the stat screen and display stats
     private void OnMouseDown()
     {
-        statScreen.transform.position = transform.position;
+        statScreen.transform.position = new Vector3(8.5f, 0, 0);
         UpdateStatScreen();
+        
+        if (damageUpgradeButton.onClick != null)
+        {
+            damageUpgradeButton.onClick.RemoveAllListeners();
+        }
+
+        if (fireRateUpgradeButton.onClick != null)
+        {
+            fireRateUpgradeButton.onClick.RemoveAllListeners();
+        }
+
+        if (rangeUpgradeButton.onClick != null)
+        {
+            rangeUpgradeButton.onClick.RemoveAllListeners();
+        }
+
+        if (closeButton.onClick != null)
+        {
+            closeButton.onClick.RemoveAllListeners();
+        }
+
+        damageUpgradeButton.onClick.AddListener(UpgradeDamage);
+        fireRateUpgradeButton.onClick.AddListener(UpgradeFireRate);
+        rangeUpgradeButton.onClick.AddListener(UpgradeRange);
+        closeButton.onClick.AddListener(CloseStatScreen);
     }
 
     private void UpdateStatScreen()
     {
         damageText.text = "Damage: " + damage;
-        fireRateText.text = "Fire Rate: " + rateOfFire;
+        fireRateText.text = "Fire Rate: " + (1 / rateOfFire);
         rangeText.text = "Range: " + range;
         upgradeCostText.text = "Upgrade Cost: " + upgradeCost;
     }
@@ -313,7 +349,7 @@ public class Robot : MonoBehaviour
     // Stat Screen Buttons
     public void CloseStatScreen()
     {
-        statScreen.transform.position = new Vector3(0, 600, 0);
+        statScreen.transform.position = new Vector3(15, 0, 0);
     }
 
     public void UpgradeDamage()
@@ -321,6 +357,7 @@ public class Robot : MonoBehaviour
         if (UIScript.Currency >= upgradeCost)
         {
             damage += 10;
+            UIScript.UpdateCurrency(-upgradeCost);
             upgradeCost += 2;
             UpdateStatScreen();
         }
@@ -335,6 +372,7 @@ public class Robot : MonoBehaviour
         if (rateOfFire > 1 && UIScript.Currency >= upgradeCost)
         {
             rateOfFire -= 0.2f;
+            UIScript.UpdateCurrency(-upgradeCost);
             upgradeCost += 2;
             UpdateStatScreen();
         }
@@ -349,6 +387,7 @@ public class Robot : MonoBehaviour
         if (range < 10 && UIScript.Currency >= upgradeCost)
         {
             range += 1;
+            UIScript.UpdateCurrency(-upgradeCost);
             upgradeCost += 2;
             UpdateStatScreen();
         }
