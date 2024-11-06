@@ -84,6 +84,7 @@ public class ButtonUI : MonoBehaviour
         }
     }
 
+    // Start Screen Buttons
     public void PlayButton()
     {
         SceneManager.LoadScene(1);
@@ -98,6 +99,7 @@ public class ButtonUI : MonoBehaviour
         Application.Quit();
     }
 
+    // Pause Screen Buttons
     public void PauseButton()
     {
         pauseMenu.SetActive(true);
@@ -132,14 +134,7 @@ public class ButtonUI : MonoBehaviour
         Time.timeScale = 1f;
     }
 
-    public void StartWave()
-    {
-        mode.Mode1 = Mode.WaveMode;
-        ui.UpdateGameMode();
-        enemyManager.StartWave();
-        startWaveButton.SetActive(false);
-    }
-
+    // Hot Bar Buttons
     public void Item1()
     {
         if (hotBar != HotBar.item1)
@@ -157,5 +152,14 @@ public class ButtonUI : MonoBehaviour
             hotBar = HotBar.none;
             hotBarButtons[0].image.color = Color.white;
         }
+    }
+
+    // Other Buttons
+    public void StartWave()
+    {
+        mode.Mode1 = Mode.WaveMode;
+        ui.UpdateGameMode();
+        enemyManager.StartWave();
+        startWaveButton.SetActive(false);
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -65,7 +66,17 @@ public class Robot : MonoBehaviour
     private LineRenderer lineRenderer;
     private Transform[] linePositions = new Transform [2];
     private float lineFadeTime;
-        
+
+    // Stat Screen Stuff
+    private GameObject statScreen;
+    private TextMeshProUGUI damageText;
+    private TextMeshProUGUI fireRateText;
+    private TextMeshProUGUI rangeText;
+    private TextMeshProUGUI upgradeCostText;
+    private int upgradeCost;
+
+    private UIScript UIScript;
+
     // Properties
 
     // Getters and setter for turret cost
@@ -112,6 +123,15 @@ public class Robot : MonoBehaviour
 
         lineRenderer = GetComponent<LineRenderer>();
         linePositions[0] = transform;
+
+        statScreen = GameObject.Find("Stat Screen");
+        damageText = GameObject.Find("damage text").GetComponent<TextMeshProUGUI>();
+        fireRateText = GameObject.Find("fire rate text").GetComponent<TextMeshProUGUI>();
+        rangeText = GameObject.Find("range text").GetComponent<TextMeshProUGUI>();
+        upgradeCostText = GameObject.Find("upgrade cost text").GetComponent<TextMeshProUGUI>();
+        upgradeCost = 2;
+
+        UIScript = GameObject.Find("Canvas").GetComponent<UIScript>();
 
         coolDown = 999;
         lineFadeTime = 0;
@@ -273,5 +293,69 @@ public class Robot : MonoBehaviour
         Gizmos.DrawWireSphere(
             transform.position,
             range);
+    }
+
+    // This should pull over the stat screen and display stats
+    private void OnMouseDown()
+    {
+        statScreen.transform.position = transform.position;
+        UpdateStatScreen();
+    }
+
+    private void UpdateStatScreen()
+    {
+        damageText.text = "Damage: " + damage;
+        fireRateText.text = "Fire Rate: " + rateOfFire;
+        rangeText.text = "Range: " + range;
+        upgradeCostText.text = "Upgrade Cost: " + upgradeCost;
+    }
+
+    // Stat Screen Buttons
+    public void CloseStatScreen()
+    {
+        statScreen.transform.position = new Vector3(0, 600, 0);
+    }
+
+    public void UpgradeDamage()
+    {
+        if (UIScript.Currency >= upgradeCost)
+        {
+            damage += 10;
+            upgradeCost += 2;
+            UpdateStatScreen();
+        }
+        else
+        {
+
+        }
+    }
+
+    public void UpgradeFireRate()
+    {
+        if (rateOfFire > 1 && UIScript.Currency >= upgradeCost)
+        {
+            rateOfFire -= 0.2f;
+            upgradeCost += 2;
+            UpdateStatScreen();
+        }
+        else
+        {
+            // something
+        }
+    }
+
+    public void UpgradeRange()
+    {
+        if (range < 10 && UIScript.Currency >= upgradeCost)
+        {
+            range += 1;
+            upgradeCost += 2;
+            UpdateStatScreen();
+        }
+        else
+        {
+            // something 
+        }
+        
     }
 }
