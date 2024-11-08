@@ -11,6 +11,7 @@ using UnityEngine;
 // SPECIAL NOTES:
 // ===============================
 // Change History://
+//  11/8/24 - Boss bug added
 //  11/7/24 - Added in a wave system that can is fully reliant on lists. 
 //  11/6/24 - Added in a wave system that uses lists instead of a count. Only works for wave 2 but I will change it to work for other waves. 
 //  10/31/24 - Added support for different currency rewards and damage amounts
