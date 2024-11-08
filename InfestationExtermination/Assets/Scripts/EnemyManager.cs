@@ -11,6 +11,7 @@ using UnityEngine;
 // SPECIAL NOTES:
 // ===============================
 // Change History://
+//  11/8/24 - Boss bug added
 //  11/7/24 - Added in a wave system that can is fully reliant on lists. 
 //  11/6/24 - Added in a wave system that uses lists instead of a count. Only works for wave 2 but I will change it to work for other waves. 
 //  10/31/24 - Added support for different currency rewards and damage amounts
@@ -37,6 +38,9 @@ public class EnemyManager : MonoBehaviour
 
     // Prefab for fast bug enemy
     [SerializeField] private GameObject FastBugPrefab;
+
+    // Prefab for boss bug enemy
+    [SerializeField] private GameObject BossBugPrefab;
 
     // Spawn point for bugs
     [SerializeField] private Vector3 bugSpawnPoint;
@@ -167,11 +171,11 @@ public class EnemyManager : MonoBehaviour
         }
         else if (waveNumber == 4)
         {
-            waveBugs = new List<GameObject> { FastBugPrefab, HeavyBugPrefab, FastBugPrefab, BugPrefab, BugPrefab, FastBugPrefab, FastBugPrefab, FastBugPrefab, HeavyBugPrefab, FastBugPrefab };
+            waveBugs = new List<GameObject> { FastBugPrefab, HeavyBugPrefab, FastBugPrefab, BugPrefab, BugPrefab, FastBugPrefab, FastBugPrefab, HeavyBugPrefab, FastBugPrefab, FastBugPrefab };
         }
         else if (waveNumber == 5)
         {
-            waveBugs = new List<GameObject> { BugPrefab, BugPrefab, FastBugPrefab, HeavyBugPrefab, FastBugPrefab, FastBugPrefab, BugPrefab, BugPrefab, FastBugPrefab, FastBugPrefab, FastBugPrefab, HeavyBugPrefab, HeavyBugPrefab, HeavyBugPrefab };
+            waveBugs = new List<GameObject> { BugPrefab, BugPrefab, FastBugPrefab, HeavyBugPrefab, FastBugPrefab, FastBugPrefab, BugPrefab, BugPrefab, FastBugPrefab, FastBugPrefab, FastBugPrefab, HeavyBugPrefab, HeavyBugPrefab, FastBugPrefab, BossBugPrefab };
         }
 
         for (int i = 0; i < waveBugs.Count; i++)

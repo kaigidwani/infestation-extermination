@@ -7426,6 +7426,7 @@ MonoBehaviour:
   BugPrefab: {fileID: 4791549053597893821, guid: ad03826f616ff4e4dadac541b64da1e5, type: 3}
   HeavyBugPrefab: {fileID: 4791549053597893821, guid: a32b4fe6e17f50346bea4683e97c1a5b, type: 3}
   FastBugPrefab: {fileID: 4791549053597893821, guid: 5ac8c839b5da50c4ca10e8fbf439c046, type: 3}
+  BossBugPrefab: {fileID: 4791549053597893821, guid: b318c74aa4b2b9c42b2977b3f17c2c05, type: 3}
   bugSpawnPoint: {x: -7.7, y: 4.54, z: 1}
   amountOfEnemies: 3
   distanceBetweenEnemies: 3
