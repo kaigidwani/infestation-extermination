@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6984628097522202803}
   - component: {fileID: 88264793204705262}
   m_Layer: 0
-  m_Name: HeavyBugPrefab
+  m_Name: FastBugPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: f11e240fabff98a48b29f77b951150db, type: 3}
-  m_Color: {r: 0.093435325, g: 0.031817373, b: 0.122641504, a: 1}
+  m_Color: {r: 1, g: 0, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -99,10 +99,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisBug: {fileID: 0}
-  health: 120
+  health: 30
   healthMax: 0
   damage: 1
-  speed: 1.5
+  speed: 5
   positions:
   - {x: -7.7, y: -4.25, z: 0}
   - {x: -1.7, y: -4.25, z: 0}
@@ -113,7 +113,7 @@ MonoBehaviour:
   - {x: 7.8, y: 2.52, z: 0}
   targetObject: {fileID: 5609215594693418302, guid: 62a1c4a215f8c98419c2b2c06fa92528, type: 3}
   hBar: {fileID: 8866532190148013035}
-  rewardAmount: 2
+  rewardAmount: 1
 --- !u!1 &6663483158833061670
 GameObject:
   m_ObjectHideFlags: 0

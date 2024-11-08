@@ -11,6 +11,7 @@ using UnityEngine;
 // SPECIAL NOTES:
 // ===============================
 // Change History://
+//  11/7/24 - Added in a wave system that can is fully reliant on lists. 
 //  11/6/24 - Added in a wave system that uses lists instead of a count. Only works for wave 2 but I will change it to work for other waves. 
 //  10/31/24 - Added support for different currency rewards and damage amounts
 //  10/31/24 - Incremental Waves (Justin Huang) Note: Not Really Good Way?
@@ -33,6 +34,9 @@ public class EnemyManager : MonoBehaviour
 
     // Prefab for heavy bug enemy
     [SerializeField] private GameObject HeavyBugPrefab;
+
+    // Prefab for fast bug enemy
+    [SerializeField] private GameObject FastBugPrefab;
 
     // Spawn point for bugs
     [SerializeField] private Vector3 bugSpawnPoint;
@@ -62,7 +66,7 @@ public class EnemyManager : MonoBehaviour
     private ButtonUI ButtonUI;
 
     // Wave 2 (Testing array method)
-    [SerializeField] private List<GameObject> wave2Bugs;
+    [SerializeField] private List<GameObject> waveBugs;
 
     // === Properties ===
 
@@ -90,7 +94,7 @@ public class EnemyManager : MonoBehaviour
         ButtonUI = canvas.GetComponent<ButtonUI>();
 
         //Sets the wave 2 bugs. Will probably be changed later
-        wave2Bugs = new List<GameObject> { HeavyBugPrefab, BugPrefab, BugPrefab, BugPrefab, BugPrefab};
+        waveBugs = new List<GameObject> { BugPrefab, BugPrefab, BugPrefab};
 
         waveNumber = 1;
     }
@@ -151,59 +155,39 @@ public class EnemyManager : MonoBehaviour
     {
         if (waveNumber == 1)
         {
-            amountOfEnemies = 3;
+            waveBugs = new List<GameObject> { BugPrefab, BugPrefab, BugPrefab };
         }
         else if (waveNumber == 2)
         {
-            amountOfEnemies = 5;
+            waveBugs = new List<GameObject> { HeavyBugPrefab, BugPrefab, BugPrefab, BugPrefab, BugPrefab };
         }
         else if (waveNumber == 3)
         {
-            amountOfEnemies = 8;
+            waveBugs = new List<GameObject> { FastBugPrefab, FastBugPrefab, FastBugPrefab, FastBugPrefab, FastBugPrefab, FastBugPrefab, FastBugPrefab };
         }
         else if (waveNumber == 4)
         {
-            amountOfEnemies = 13;
+            waveBugs = new List<GameObject> { FastBugPrefab, HeavyBugPrefab, FastBugPrefab, BugPrefab, BugPrefab, FastBugPrefab, FastBugPrefab, FastBugPrefab, HeavyBugPrefab, FastBugPrefab };
         }
         else if (waveNumber == 5)
         {
-            amountOfEnemies = 25;
+            waveBugs = new List<GameObject> { BugPrefab, BugPrefab, FastBugPrefab, HeavyBugPrefab, FastBugPrefab, FastBugPrefab, BugPrefab, BugPrefab, FastBugPrefab, FastBugPrefab, FastBugPrefab, HeavyBugPrefab, HeavyBugPrefab, HeavyBugPrefab };
         }
 
-        if (waveNumber == 2)
+        for (int i = 0; i < waveBugs.Count; i++)
         {
-            for (int i = 0; i < wave2Bugs.Count; i++)
-            {
-                EnemiesList.Add(
-                    Instantiate(
-                        wave2Bugs[i],
-                        new Vector3(
-                            bugSpawnPoint.x,
-                            bugSpawnPoint.y + distanceBetweenEnemies * i,
-                            bugSpawnPoint.z
-                            ),
-                        Quaternion.identity
-        )
-    );
-            }
+            EnemiesList.Add(
+                Instantiate(
+                    waveBugs[i],
+                    new Vector3(
+                        bugSpawnPoint.x,
+                        bugSpawnPoint.y + distanceBetweenEnemies * i,
+                        bugSpawnPoint.z
+                        ),
+                    Quaternion.identity
+                    )
+                    );
         }
-        else
-        {
-        for (int i = 0; i < amountOfEnemies; i++)
-        {
-           // Spawn in a bug at a point incrementally upward
-           EnemiesList.Add(
-               Instantiate(
-                   BugPrefab,
-                   new Vector3(
-                       bugSpawnPoint.x,
-                       bugSpawnPoint.y + distanceBetweenEnemies * i,
-                       bugSpawnPoint.z
-                       ),
-                   Quaternion.identity
-                   )
-               );
-        }
-        }
+
     }
 }
