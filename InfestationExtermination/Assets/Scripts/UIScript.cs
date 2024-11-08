@@ -29,7 +29,7 @@ public class UIScript : MonoBehaviour
     [SerializeField] private GameObject gameWin;
 
     private GameObject canvas;
-    private GameMode mode;
+    private GameState state;
     private EnemyManager enemyManager;
 
     // Properties
@@ -56,7 +56,7 @@ public class UIScript : MonoBehaviour
     void Start()
     {
         canvas = GameObject.Find("Canvas");
-        mode = canvas.GetComponent<GameMode>();
+        state = canvas.GetComponent<GameState>();
         enemyManager = GameObject.Find("EnemyManager").GetComponent<EnemyManager>();
 
         health = 5;
@@ -95,11 +95,11 @@ public class UIScript : MonoBehaviour
 
     public void UpdateGameMode()
     {
-        if (mode.Mode1 == Mode.BuildMode)
+        if (state.State1 == State.Build)
         {
             gameModeText.text = "Build Mode";
         }
-        else if (mode.Mode1 == Mode.WaveMode)
+        else if (state.State1 == State.Wave)
         {
             gameModeText.text = "Wave " + enemyManager.WaveNumber;
         }

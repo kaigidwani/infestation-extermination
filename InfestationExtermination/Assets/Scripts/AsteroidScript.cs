@@ -31,7 +31,7 @@ public class AsteroidScript : MonoBehaviour
 
     // Other scripts
     private UIScript UIScript;
-    private GameMode mode;
+    private GameState state;
     private ButtonUI buttonUI;
 
     // Robot
@@ -42,7 +42,7 @@ public class AsteroidScript : MonoBehaviour
     {
         //Sets the canvas
         canvas = GameObject.Find("Canvas");
-        mode = canvas.GetComponent<GameMode>();
+        state = canvas.GetComponent<GameState>();
         UIScript = canvas.GetComponent<UIScript>();
         buttonUI = canvas.GetComponent<ButtonUI>();
 
@@ -78,7 +78,7 @@ public class AsteroidScript : MonoBehaviour
         //    ifObject = true;
         //}
 
-        if (UIScript.Currency >= robot.GetComponent<Robot>().Cost && buttonUI.HotBar1 == HotBar.item1 && ifObject == false)
+        if (UIScript.Currency >= robot.GetComponent<Robot>().Cost && buttonUI.HotBar1 == HotBar.item1 && ifObject == false && state.State1 != State.Pause)
         {
             // Spawn the robot and save it as a game object
             GameObject spawnedRobot = Instantiate(robot, asteroidPosition, new Quaternion());
@@ -89,10 +89,6 @@ public class AsteroidScript : MonoBehaviour
             UIScript.UpdateCurrency(robot.GetComponent<Robot>().Cost * -1);
 
             ifObject = true;
-        }
-        else
-        {
-            Debug.Log("Not Enough Currency");
         }
     }
 }

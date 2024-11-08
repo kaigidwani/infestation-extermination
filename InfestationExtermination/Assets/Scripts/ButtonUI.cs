@@ -28,12 +28,14 @@ public class ButtonUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI startWaveButtonText;
 
     private GameObject canvas;
-    private GameMode mode;
+    private GameState state;
     private UIScript ui;
     private EnemyManager enemyManager;
 
     private HotBar hotBar;
     [SerializeField] private Button[] hotBarButtons;
+    [SerializeField] private TextMeshProUGUI[] hotBarCosts;
+    [SerializeField] private GameObject[] hotBarFilters;
 
     bool singlePress;
 
@@ -57,7 +59,7 @@ public class ButtonUI : MonoBehaviour
     void Start()
     {
         canvas = GameObject.Find("Canvas");
-        mode = canvas.GetComponent<GameMode>();
+        state = canvas.GetComponent<GameState>();
         ui = canvas.GetComponent<UIScript>();
         enemyManager = GameObject.Find("EnemyManager").GetComponent<EnemyManager>();
 
@@ -82,6 +84,17 @@ public class ButtonUI : MonoBehaviour
                 singlePress = false;
             }
         }
+
+        if (ui.Currency < 4)
+        {
+            hotBarFilters[0].SetActive(true);
+            hotBarCosts[0].color = Color.red;
+        }
+        else
+        {
+            hotBarFilters[0].SetActive(false);
+            hotBarCosts[0].color = Color.white;
+        }
     }
 
     // Start Screen Buttons
@@ -104,7 +117,7 @@ public class ButtonUI : MonoBehaviour
     {
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
-        mode.Mode1 = Mode.Pause;
+        state.State1 = State.Pause;
     }
 
     public void ResumeButton()
@@ -114,11 +127,11 @@ public class ButtonUI : MonoBehaviour
 
         if (ui.GameModeText.text == "Build Mode")
         {
-            mode.Mode1 = Mode.BuildMode;
+            state.State1 = State.Build;
         }
         else
         {
-            mode.Mode1 = Mode.WaveMode;
+            state.State1 = State.Wave;
         }
     }
 
@@ -137,6 +150,8 @@ public class ButtonUI : MonoBehaviour
     // Hot Bar Buttons
     public void Item1()
     {
+        if (state.State1 == State.Pause) return;
+
         if (hotBar != HotBar.item1)
         {
             for (int i = 0; i < hotBarButtons.Length; i++)
@@ -157,7 +172,7 @@ public class ButtonUI : MonoBehaviour
     // Other Buttons
     public void StartWave()
     {
-        mode.Mode1 = Mode.WaveMode;
+        state.State1 = State.Wave;
         ui.UpdateGameMode();
         enemyManager.StartWave();
         startWaveButton.SetActive(false);

@@ -60,7 +60,7 @@ public class EnemyManager : MonoBehaviour
     private UIScript UIScript;
 
     // Reference to the GameMode Script
-    private GameMode GameMode;
+    private GameState state;
 
     // Reference to the ButtonUI Script
     private ButtonUI ButtonUI;
@@ -90,7 +90,7 @@ public class EnemyManager : MonoBehaviour
 
         canvas = GameObject.Find("Canvas");
         UIScript = canvas.GetComponent<UIScript>();
-        GameMode = canvas.GetComponent<GameMode>();
+        state = canvas.GetComponent<GameState>();
         ButtonUI = canvas.GetComponent<ButtonUI>();
 
         //Sets the wave 2 bugs. Will probably be changed later
@@ -137,9 +137,9 @@ public class EnemyManager : MonoBehaviour
         }
 
         // When enemy list is empty
-        if (enemiesList.Count == 0 && GameMode.Mode1 == Mode.WaveMode)
+        if (enemiesList.Count == 0 && state.State1 == State.Wave)
         {
-            GameMode.Mode1 = Mode.BuildMode;
+            state.State1 = State.Build;
             UIScript.UpdateGameMode();
             waveNumber++;
 

@@ -86,6 +86,7 @@ public class Robot : MonoBehaviour
     private Button closeButton;
 
     private UIScript UIScript;
+    private GameState state;
 
     // Properties
 
@@ -151,6 +152,7 @@ public class Robot : MonoBehaviour
         closeButton = GameObject.Find("close button").GetComponent<Button>();
 
         UIScript = GameObject.Find("Canvas").GetComponent<UIScript>();
+        state = GameObject.Find("Canvas").GetComponent<GameState>();
 
         coolDown = 999;
         lineFadeTime = 0;
@@ -190,6 +192,39 @@ public class Robot : MonoBehaviour
                     lineRenderer.SetPosition(i, linePositions[i].position);
                 }
             }
+        }
+
+        if (UIScript.Currency < upgradeCostDamage)
+        {
+            upgradeTextDamage.color = Color.red;
+            damageUpgradeButton.image.color = Color.gray;
+        }
+        else
+        {
+            upgradeTextDamage.color = Color.black;
+            damageUpgradeButton.image.color = Color.white;
+        }
+
+        if (UIScript.Currency < upgradeCostFireRate)
+        {
+            upgradeTextFireRate.color = Color.red;
+            fireRateUpgradeButton.image.color = Color.gray;
+        }
+        else
+        {
+            upgradeTextFireRate.color = Color.black;
+            fireRateUpgradeButton.image.color = Color.white;
+        }
+
+        if (UIScript.Currency < upgradeCostRange)
+        {
+            upgradeTextRange.color = Color.red;
+            rangeUpgradeButton.image.color = Color.gray;
+        }
+        else
+        {
+            upgradeTextRange.color = Color.black;
+            rangeUpgradeButton.image.color = Color.white;
         }
     }
 
@@ -317,6 +352,8 @@ public class Robot : MonoBehaviour
     // This should pull over the stat screen and display stats
     private void OnMouseDown()
     {
+        if (state.State1 == State.Pause) return;
+
         statScreen.transform.position = new Vector3(6.6666f, 0, 0);
         UpdateStatScreen();
         
@@ -359,6 +396,8 @@ public class Robot : MonoBehaviour
     // Stat Screen Buttons
     public void CloseStatScreen()
     {
+        if (state.State1 == State.Pause) return;
+
         statScreen.transform.position = new Vector3(15, 0, 0);
     }
 
@@ -393,10 +432,5 @@ public class Robot : MonoBehaviour
             upgradeCostRange += 2;
             UpdateStatScreen();
         }
-        else
-        {
-            // something 
-        }
-        
     }
 }
