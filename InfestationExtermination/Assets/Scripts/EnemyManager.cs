@@ -38,6 +38,9 @@ public class EnemyManager : MonoBehaviour
     // Prefab for fast bug enemy
     [SerializeField] private GameObject FastBugPrefab;
 
+    // Prefab for boss bug enemy
+    [SerializeField] private GameObject BossBugPrefab;
+
     // Spawn point for bugs
     [SerializeField] private Vector3 bugSpawnPoint;
 
@@ -167,11 +170,11 @@ public class EnemyManager : MonoBehaviour
         }
         else if (waveNumber == 4)
         {
-            waveBugs = new List<GameObject> { FastBugPrefab, HeavyBugPrefab, FastBugPrefab, BugPrefab, BugPrefab, FastBugPrefab, FastBugPrefab, FastBugPrefab, HeavyBugPrefab, FastBugPrefab };
+            waveBugs = new List<GameObject> { FastBugPrefab, HeavyBugPrefab, FastBugPrefab, BugPrefab, BugPrefab, FastBugPrefab, FastBugPrefab, HeavyBugPrefab, FastBugPrefab, FastBugPrefab };
         }
         else if (waveNumber == 5)
         {
-            waveBugs = new List<GameObject> { BugPrefab, BugPrefab, FastBugPrefab, HeavyBugPrefab, FastBugPrefab, FastBugPrefab, BugPrefab, BugPrefab, FastBugPrefab, FastBugPrefab, FastBugPrefab, HeavyBugPrefab, HeavyBugPrefab, HeavyBugPrefab };
+            waveBugs = new List<GameObject> { BugPrefab, BugPrefab, FastBugPrefab, HeavyBugPrefab, FastBugPrefab, FastBugPrefab, BugPrefab, BugPrefab, FastBugPrefab, FastBugPrefab, FastBugPrefab, HeavyBugPrefab, HeavyBugPrefab, FastBugPrefab, BossBugPrefab };
         }
 
         for (int i = 0; i < waveBugs.Count; i++)
