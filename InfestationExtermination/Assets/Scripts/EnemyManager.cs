@@ -69,8 +69,14 @@ public class EnemyManager : MonoBehaviour
     // Reference to the ButtonUI Script
     private ButtonUI ButtonUI;
 
+    [System.Serializable]
+    public struct Row
+    {
+        public List<GameObject> row;
+    }
+
     // Wave 2 (Testing array method)
-    [SerializeField] private List<GameObject> waveBugs;
+    [SerializeField] private List<Row> enemyWaves;
 
     // === Properties ===
 
@@ -98,7 +104,7 @@ public class EnemyManager : MonoBehaviour
         ButtonUI = canvas.GetComponent<ButtonUI>();
 
         //Sets the wave 2 bugs. Will probably be changed later
-        waveBugs = new List<GameObject> { BugPrefab, BugPrefab, BugPrefab};
+        // waveBugs = new List<GameObject> { BugPrefab, BugPrefab, BugPrefab};
 
         waveNumber = 1;
     }
@@ -157,41 +163,41 @@ public class EnemyManager : MonoBehaviour
 
     public void StartWave()
     {
-        if (waveNumber == 1)
-        {
-            waveBugs = new List<GameObject> { BugPrefab, BugPrefab, BugPrefab };
-        }
-        else if (waveNumber == 2)
-        {
-            waveBugs = new List<GameObject> { HeavyBugPrefab, BugPrefab, BugPrefab, BugPrefab, BugPrefab };
-        }
-        else if (waveNumber == 3)
-        {
-            waveBugs = new List<GameObject> { FastBugPrefab, FastBugPrefab, FastBugPrefab, FastBugPrefab, FastBugPrefab, FastBugPrefab, FastBugPrefab };
-        }
-        else if (waveNumber == 4)
-        {
-            waveBugs = new List<GameObject> { FastBugPrefab, HeavyBugPrefab, FastBugPrefab, BugPrefab, BugPrefab, FastBugPrefab, FastBugPrefab, HeavyBugPrefab, FastBugPrefab, FastBugPrefab };
-        }
-        else if (waveNumber == 5)
-        {
-            waveBugs = new List<GameObject> { BugPrefab, BugPrefab, FastBugPrefab, HeavyBugPrefab, FastBugPrefab, FastBugPrefab, BugPrefab, BugPrefab, FastBugPrefab, FastBugPrefab, FastBugPrefab, HeavyBugPrefab, HeavyBugPrefab, FastBugPrefab, BossBugPrefab };
-        }
+        //if (waveNumber == 1)
+        //{
+        //    waveBugs = new List<GameObject> { BugPrefab, BugPrefab, BugPrefab };
+        //}
+        //else if (waveNumber == 2)
+        //{
+        //    waveBugs = new List<GameObject> { HeavyBugPrefab, BugPrefab, BugPrefab, BugPrefab, BugPrefab };
+        //}
+        //else if (waveNumber == 3)
+        //{
+        //    waveBugs = new List<GameObject> { FastBugPrefab, FastBugPrefab, FastBugPrefab, FastBugPrefab, FastBugPrefab, FastBugPrefab, FastBugPrefab };
+        //}
+        //else if (waveNumber == 4)
+        //{
+        //    waveBugs = new List<GameObject> { FastBugPrefab, HeavyBugPrefab, FastBugPrefab, BugPrefab, BugPrefab, FastBugPrefab, FastBugPrefab, HeavyBugPrefab, FastBugPrefab, FastBugPrefab };
+        //}
+        //else if (waveNumber == 5)
+        //{
+        //    waveBugs = new List<GameObject> { BugPrefab, BugPrefab, FastBugPrefab, HeavyBugPrefab, FastBugPrefab, FastBugPrefab, BugPrefab, BugPrefab, FastBugPrefab, FastBugPrefab, FastBugPrefab, HeavyBugPrefab, HeavyBugPrefab, FastBugPrefab, BossBugPrefab };
+        //}
 
-        for (int i = 0; i < waveBugs.Count; i++)
-        {
-            EnemiesList.Add(
-                Instantiate(
-                    waveBugs[i],
-                    new Vector3(
-                        bugSpawnPoint.x,
-                        bugSpawnPoint.y + distanceBetweenEnemies * i,
-                        bugSpawnPoint.z
-                        ),
-                    Quaternion.identity
-                    )
-                    );
-        }
+        //for (int i = 0; i < waveBugs.Count; i++)
+        //{
+        //    EnemiesList.Add(
+        //        Instantiate(
+        //            waveBugs[i],
+        //            new Vector3(
+        //                bugSpawnPoint.x,
+        //                bugSpawnPoint.y + distanceBetweenEnemies * i,
+        //                bugSpawnPoint.z
+        //                ),
+        //            Quaternion.identity
+        //            )
+        //            );
+        //}
 
     }
 }
