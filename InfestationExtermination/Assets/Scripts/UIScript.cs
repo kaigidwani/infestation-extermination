@@ -75,7 +75,7 @@ public class UIScript : MonoBehaviour
             gameOver.SetActive(true);
         }
 
-        if (enemyManager.WaveNumber == 6)
+        if (enemyManager.WaveNumber == enemyManager.WaveNumbers + 1)
         {
             gameWin.SetActive(true);
         }

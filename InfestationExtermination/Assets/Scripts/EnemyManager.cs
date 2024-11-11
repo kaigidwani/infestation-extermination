@@ -27,35 +27,31 @@ public class EnemyManager : MonoBehaviour
 {
     // === Fields ===
 
+    // Input for enemiesList
+    [System.Serializable]
+    public struct Row
+    {
+        public List<GameObject> row;
+    }
+
+    // Wave 2 (Testing array method)
+    [SerializeField] private List<Row> enemyWaves;
+
     // List of all bug enemies
-    [SerializeField] List<GameObject> enemiesList = new List<GameObject>();
-
-    // Prefab for bug enemy
-    [SerializeField] private GameObject BugPrefab;
-
-    // Prefab for heavy bug enemy
-    [SerializeField] private GameObject HeavyBugPrefab;
-
-    // Prefab for fast bug enemy
-    [SerializeField] private GameObject FastBugPrefab;
-
-    // Prefab for boss bug enemy
-    [SerializeField] private GameObject BossBugPrefab;
-
-    // Spawn point for bugs
-    [SerializeField] private Vector3 bugSpawnPoint;
-
-    // Amount of enemies to spawn
-    [SerializeField] private int amountOfEnemies;
-
-    // The distance between each enemy
-    [SerializeField] private float distanceBetweenEnemies;
-
-    private int waveNumber;
+    List<GameObject> enemiesList = new List<GameObject>();
 
     // List of all bug enemies to be deleted
     // This prevents errors caused by deleting an item while it exists in a list being looped through
     List<GameObject> enemiesToDestroy = new List<GameObject>();
+
+    // Spawn point for bugs
+    [SerializeField] private Vector3 bugSpawnPoint;
+
+    // The distance between each enemy
+    [SerializeField] private float distanceBetweenEnemies;
+
+    // Check what wave it is
+    private int waveNumber = 1;
 
     // Reference to the canvas
     private GameObject canvas;
@@ -68,15 +64,6 @@ public class EnemyManager : MonoBehaviour
 
     // Reference to the ButtonUI Script
     private ButtonUI ButtonUI;
-
-    [System.Serializable]
-    public struct Row
-    {
-        public List<GameObject> row;
-    }
-
-    // Wave 2 (Testing array method)
-    [SerializeField] private List<Row> enemyWaves;
 
     // === Properties ===
 
@@ -91,6 +78,11 @@ public class EnemyManager : MonoBehaviour
         get { return waveNumber; }
     }
 
+    public int WaveNumbers
+    {
+        get { return enemyWaves.Count; }
+    }
+
     // === Methods ===
 
     // Start is called before the first frame update
@@ -102,11 +94,6 @@ public class EnemyManager : MonoBehaviour
         UIScript = canvas.GetComponent<UIScript>();
         state = canvas.GetComponent<GameState>();
         ButtonUI = canvas.GetComponent<ButtonUI>();
-
-        //Sets the wave 2 bugs. Will probably be changed later
-        // waveBugs = new List<GameObject> { BugPrefab, BugPrefab, BugPrefab};
-
-        waveNumber = 1;
     }
 
     // Update is called once per frame
@@ -153,7 +140,7 @@ public class EnemyManager : MonoBehaviour
             UIScript.UpdateGameMode();
             waveNumber++;
 
-            if (waveNumber < 6)
+            if (waveNumber < enemyWaves.Count + 1)
             {
                 ButtonUI.StartWaveButton.SetActive(true);
                 ButtonUI.StartWaveButtonText.text = "Start Wave " + waveNumber;
@@ -163,41 +150,21 @@ public class EnemyManager : MonoBehaviour
 
     public void StartWave()
     {
-        //if (waveNumber == 1)
-        //{
-        //    waveBugs = new List<GameObject> { BugPrefab, BugPrefab, BugPrefab };
-        //}
-        //else if (waveNumber == 2)
-        //{
-        //    waveBugs = new List<GameObject> { HeavyBugPrefab, BugPrefab, BugPrefab, BugPrefab, BugPrefab };
-        //}
-        //else if (waveNumber == 3)
-        //{
-        //    waveBugs = new List<GameObject> { FastBugPrefab, FastBugPrefab, FastBugPrefab, FastBugPrefab, FastBugPrefab, FastBugPrefab, FastBugPrefab };
-        //}
-        //else if (waveNumber == 4)
-        //{
-        //    waveBugs = new List<GameObject> { FastBugPrefab, HeavyBugPrefab, FastBugPrefab, BugPrefab, BugPrefab, FastBugPrefab, FastBugPrefab, HeavyBugPrefab, FastBugPrefab, FastBugPrefab };
-        //}
-        //else if (waveNumber == 5)
-        //{
-        //    waveBugs = new List<GameObject> { BugPrefab, BugPrefab, FastBugPrefab, HeavyBugPrefab, FastBugPrefab, FastBugPrefab, BugPrefab, BugPrefab, FastBugPrefab, FastBugPrefab, FastBugPrefab, HeavyBugPrefab, HeavyBugPrefab, FastBugPrefab, BossBugPrefab };
-        //}
+        List<GameObject> enemyWave = enemyWaves[waveNumber - 1].row;
 
-        //for (int i = 0; i < waveBugs.Count; i++)
-        //{
-        //    EnemiesList.Add(
-        //        Instantiate(
-        //            waveBugs[i],
-        //            new Vector3(
-        //                bugSpawnPoint.x,
-        //                bugSpawnPoint.y + distanceBetweenEnemies * i,
-        //                bugSpawnPoint.z
-        //                ),
-        //            Quaternion.identity
-        //            )
-        //            );
-        //}
-
+        for (int i = 0; i < enemyWave.Count; i++)
+        {
+            EnemiesList.Add(
+                Instantiate(
+                    enemyWave[i],
+                    new Vector3(
+                        bugSpawnPoint.x,
+                        bugSpawnPoint.y + distanceBetweenEnemies * i,
+                        bugSpawnPoint.z
+                        ),
+                    Quaternion.identity
+                    )
+                    );
+        }
     }
 }
