@@ -52,7 +52,7 @@ public class Robot : MonoBehaviour
     [SerializeField] private float coolDown;
 
     // The enemy manager
-    [SerializeField] private GameObject enemyManager;
+    private GameObject enemyManager;
 
     // Shoot SFX
     [SerializeField] private AudioSource shootSFX;
@@ -87,11 +87,12 @@ public class Robot : MonoBehaviour
     private Button rangeUpgradeButton;
     private Button closeButton;
 
-    [SerializeField] private UIScript UIScript;
-    [SerializeField] private GameState state;
+    private UIScript UIScript;
+    private GameState state;
+    private StatScreen stat;
 
     //Circle for robot
-    [SerializeField] private GameObject radiusOfShoot;
+    [SerializeField] private GameObject radiusCircle;
 
     // Properties
 
@@ -130,16 +131,47 @@ public class Robot : MonoBehaviour
         set { asteroidReference = value; }
     }
 
+    // So that stat screen buttons update properly in reaction to currency
+    public int UpgradeCostDamage
+    {
+        get => upgradeCostDamage;
+        set => upgradeCostDamage = value;
+    }
+
+    public int UpgradeCostFireRate
+    {
+        get => upgradeCostFireRate;
+        set => upgradeCostFireRate = value;
+    }
+
+    public int UpgradeCostRange
+    {
+        get => upgradeCostRange;
+        set => upgradeCostRange = value;
+    }
+
+    public GameObject RadiusCircle
+    { 
+        get => radiusCircle;
+    }
+
     // Methods
 
     // Start is called before the first frame update
     void Start()
     {
+        // Find Scripts
         enemyManager = GameObject.Find("EnemyManager");
+        UIScript = GameObject.Find("Canvas").GetComponent<UIScript>();
+        state = GameObject.Find("Canvas").GetComponent<GameState>();
+        stat = GameObject.Find("Stat Screen").GetComponent<StatScreen>();
 
+        // Line Renderer Stuff
         lineRenderer = GetComponent<LineRenderer>();
         linePositions[0] = transform;
+        lineFadeTime = 0;
 
+        // Find Stat Screen object and its componenets
         statScreen = GameObject.Find("Stat Screen");
         damageText = GameObject.Find("damage text").GetComponent<TextMeshProUGUI>();
         fireRateText = GameObject.Find("fire rate text").GetComponent<TextMeshProUGUI>();
@@ -156,11 +188,8 @@ public class Robot : MonoBehaviour
         rangeUpgradeButton = GameObject.Find("range upgrade button").GetComponent<Button>();
         closeButton = GameObject.Find("close button").GetComponent<Button>();
 
-        UIScript = GameObject.Find("Canvas").GetComponent<UIScript>();
-        state = GameObject.Find("Canvas").GetComponent<GameState>();
-
+        // Fire Rate Thing?
         coolDown = 999;
-        lineFadeTime = 0;
     }
 
     // Update is called once per frame
@@ -180,6 +209,7 @@ public class Robot : MonoBehaviour
             asteroidReference.transform.position.y,
             0);
 
+        // If enabled shoot line that lasts at most 0.2 second
         if (lineRenderer.enabled)
         {
             lineFadeTime += Time.deltaTime;
@@ -199,6 +229,7 @@ public class Robot : MonoBehaviour
             }
         }
 
+        // How do we only make it so that the active robot has this updating?
         if (UIScript.Currency < upgradeCostDamage)
         {
             upgradeTextDamage.color = Color.red;
@@ -232,8 +263,12 @@ public class Robot : MonoBehaviour
             rangeUpgradeButton.image.color = Color.white;
         }
 
-        //Constantly updates the circle based on the radius.
-        radiusOfShoot.transform.localScale = new Vector3(Range * 2, Range * 2, 1);
+        //Constantly updates the circle based on the radius. 
+        if (radiusCircle.activeInHierarchy)
+        {
+            // This is not accurate
+            radiusCircle.transform.localScale = new Vector3(Range * 2, Range * 2, 1);
+        }
     }
 
     // Attempt to shoot an enemy in range
@@ -364,7 +399,9 @@ public class Robot : MonoBehaviour
 
         statScreen.transform.position = new Vector3(6.6666f, 0, 0);
         UpdateStatScreen();
-        
+
+        stat.SelectedRobot = this;
+
         if (damageUpgradeButton.onClick != null)
         {
             damageUpgradeButton.onClick.RemoveAllListeners();
@@ -407,6 +444,7 @@ public class Robot : MonoBehaviour
         if (state.State1 == State.Pause) return;
 
         statScreen.transform.position = new Vector3(15, 0, 0);
+        radiusCircle.SetActive(false);
     }
 
     public void UpgradeDamage()
@@ -433,7 +471,7 @@ public class Robot : MonoBehaviour
 
     public void UpgradeRange()
     {
-        if (range < 10 && UIScript.Currency >= upgradeCostRange)
+        if (range < 8 && UIScript.Currency >= upgradeCostRange)
         {
             range += 1;
             UIScript.UpdateCurrency(-upgradeCostRange);
