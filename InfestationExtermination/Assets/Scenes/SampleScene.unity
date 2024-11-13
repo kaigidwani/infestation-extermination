@@ -1866,8 +1866,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 160, y: 240}
-  m_SizeDelta: {x: 30, y: 30}
+  m_AnchoredPosition: {x: 140.73, y: 220.73}
+  m_SizeDelta: {x: 68.54, y: 68.54}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &337547562
 MonoBehaviour:
@@ -2272,8 +2272,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4278204415
+  m_fontColor: {r: 1, g: 0.21621177, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2290,8 +2290,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25
-  m_fontSizeBase: 25
+  m_fontSize: 70
+  m_fontSizeBase: 70
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3926,7 +3926,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 100}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1858764884}
   m_Father: {fileID: 44908610}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -4061,8 +4062,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1858764884}
+  m_Children: []
   m_Father: {fileID: 44908610}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -7422,14 +7422,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85ac28c926d868e40a9d9a90eb60cc38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemiesList: []
-  BugPrefab: {fileID: 4791549053597893821, guid: ad03826f616ff4e4dadac541b64da1e5, type: 3}
-  HeavyBugPrefab: {fileID: 4791549053597893821, guid: a32b4fe6e17f50346bea4683e97c1a5b, type: 3}
-  FastBugPrefab: {fileID: 4791549053597893821, guid: 5ac8c839b5da50c4ca10e8fbf439c046, type: 3}
-  BossBugPrefab: {fileID: 4791549053597893821, guid: b318c74aa4b2b9c42b2977b3f17c2c05, type: 3}
-  bugSpawnPoint: {x: -7.7, y: 4.54, z: 1}
-  amountOfEnemies: 3
-  distanceBetweenEnemies: 3
   enemyWaves:
   - row:
     - {fileID: 4791549053597893821, guid: ad03826f616ff4e4dadac541b64da1e5, type: 3}
@@ -7476,6 +7468,8 @@ MonoBehaviour:
     - {fileID: 4791549053597893821, guid: 5ac8c839b5da50c4ca10e8fbf439c046, type: 3}
     - {fileID: 4791549053597893821, guid: 5ac8c839b5da50c4ca10e8fbf439c046, type: 3}
     - {fileID: 4791549053597893821, guid: b318c74aa4b2b9c42b2977b3f17c2c05, type: 3}
+  bugSpawnPoint: {x: -7.7, y: 4.54, z: 1}
+  distanceBetweenEnemies: 3
 --- !u!4 &1607619852
 Transform:
   m_ObjectHideFlags: 0
@@ -8258,15 +8252,15 @@ RectTransform:
   m_GameObject: {fileID: 1858764883}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 915841482}
+  m_Father: {fileID: 895074541}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 11.399948, y: 64.70002}
+  m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1858764885
 MonoBehaviour:

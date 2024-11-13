@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.Mathematics;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.GraphicsBuffer;
@@ -15,6 +16,7 @@ using static UnityEngine.GraphicsBuffer;
 // SPECIAL NOTES:
 // ===============================
 // Change History:
+// 11/13/24 - Circle to represent range
 // 10/28/24 - I added a line renderer some stuff needs fixing, some bugs
 // 10/24/24 - Added in a function with shooting and changing the sprite when it does shoot. Should be future proof if we make another robot prefab. 
 // 10/21/24 - I think that cost should be with the robot (Justin Huang)
@@ -85,8 +87,11 @@ public class Robot : MonoBehaviour
     private Button rangeUpgradeButton;
     private Button closeButton;
 
-    private UIScript UIScript;
-    private GameState state;
+    [SerializeField] private UIScript UIScript;
+    [SerializeField] private GameState state;
+
+    //Circle for robot
+    [SerializeField] private GameObject radiusOfShoot;
 
     // Properties
 
@@ -226,6 +231,9 @@ public class Robot : MonoBehaviour
             upgradeTextRange.color = Color.black;
             rangeUpgradeButton.image.color = Color.white;
         }
+
+        //Constantly updates the circle based on the radius.
+        radiusOfShoot.transform.localScale = new Vector3(Range * 2, Range * 2, 1);
     }
 
     // Attempt to shoot an enemy in range
