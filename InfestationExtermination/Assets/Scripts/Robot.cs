@@ -46,10 +46,10 @@ public class Robot : MonoBehaviour
     [SerializeField] private float rateOfFire;
 
     // Last used time
-    [SerializeField] private float lastShotTime;
+    private float lastShotTime = 0;
 
     // Cool down time
-    [SerializeField] private float coolDown;
+    private float coolDown = 100;
 
     // The enemy manager
     private GameObject enemyManager;
@@ -187,9 +187,6 @@ public class Robot : MonoBehaviour
         fireRateUpgradeButton = GameObject.Find("fire rate upgrade button").GetComponent<Button>();
         rangeUpgradeButton = GameObject.Find("range upgrade button").GetComponent<Button>();
         closeButton = GameObject.Find("close button").GetComponent<Button>();
-
-        // Fire Rate Thing?
-        coolDown = 999;
     }
 
     // Update is called once per frame
@@ -227,40 +224,6 @@ public class Robot : MonoBehaviour
                     lineRenderer.SetPosition(i, linePositions[i].position);
                 }
             }
-        }
-
-        // How do we only make it so that the active robot has this updating?
-        if (UIScript.Currency < upgradeCostDamage)
-        {
-            upgradeTextDamage.color = Color.red;
-            damageUpgradeButton.image.color = Color.gray;
-        }
-        else
-        {
-            upgradeTextDamage.color = Color.black;
-            damageUpgradeButton.image.color = Color.white;
-        }
-
-        if (UIScript.Currency < upgradeCostFireRate)
-        {
-            upgradeTextFireRate.color = Color.red;
-            fireRateUpgradeButton.image.color = Color.gray;
-        }
-        else
-        {
-            upgradeTextFireRate.color = Color.black;
-            fireRateUpgradeButton.image.color = Color.white;
-        }
-
-        if (UIScript.Currency < upgradeCostRange)
-        {
-            upgradeTextRange.color = Color.red;
-            rangeUpgradeButton.image.color = Color.gray;
-        }
-        else
-        {
-            upgradeTextRange.color = Color.black;
-            rangeUpgradeButton.image.color = Color.white;
         }
 
         //Constantly updates the circle based on the radius. 

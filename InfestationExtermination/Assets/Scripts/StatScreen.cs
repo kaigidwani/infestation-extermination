@@ -30,11 +30,8 @@ public class StatScreen : MonoBehaviour
     private TextMeshProUGUI fireRateText;
     private TextMeshProUGUI rangeText;
     private TextMeshProUGUI upgradeTextDamage;
-    private int upgradeCostDamage;
     private TextMeshProUGUI upgradeTextFireRate;
-    private int upgradeCostFireRate;
     private TextMeshProUGUI upgradeTextRange;
-    private int upgradeCostRange;
 
     private Button damageUpgradeButton;
     private Button fireRateUpgradeButton;

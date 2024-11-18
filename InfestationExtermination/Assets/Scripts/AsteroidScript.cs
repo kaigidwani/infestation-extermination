@@ -59,25 +59,6 @@ public class AsteroidScript : MonoBehaviour
     //For when it gets clicked 
     private void OnMouseDown()
     {
-        //if (ifObject == false && mode.Mode1 != Mode.Pause)
-        //{
-        //    //Changes poistion last fame so the player can simply double click
-        //    asteroidPosition = new Vector3(transform.position.x, transform.position.y, 0); //we may need to move this to update for the moving asteroids. But we'll cross that bridge when we get to it
-        //    //Spawns a button, searches for that button, then parents it to the canvas and gives the asteroid position. 
-        //    Instantiate(buttonPopUp, asteroidPosition, new Quaternion());
-        //    //Looks for the instatiated prefab
-        //    GameObject tempPrefab = GameObject.Find("Prompt(Clone)");
-        //    //parents it to the canvas
-        //    tempPrefab.transform.SetParent(canvas.transform);
-        //    //Changes the public variable asteroidposition of the tempPrefab to the astroid's asteroidPosition
-        //    tempPrefab.GetComponent<PromptScript>().asteroidPosition = asteroidPosition;
-        //    //Changes the tempPrefab's name to prevent errors
-        //    tempPrefab.name = promptName;
-        //    // Sets the AsteroidReference of the prompt to this asteroid
-        //    tempPrefab.GetComponent<PromptScript>().AsteroidReference = this;
-        //    ifObject = true;
-        //}
-
         if (UIScript.Currency >= robot.GetComponent<Robot>().Cost && buttonUI.HotBar1 == HotBar.item1 && ifObject == false && state.State1 != State.Pause)
         {
             // Spawn the robot and save it as a game object
