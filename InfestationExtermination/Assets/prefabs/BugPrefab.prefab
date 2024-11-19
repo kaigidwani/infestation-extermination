@@ -102,7 +102,7 @@ MonoBehaviour:
   health: 40
   healthMax: 0
   damage: 1
-  speed: 3.1
+  speed: 3
   positions:
   - {x: -7.7, y: -4.25, z: 0}
   - {x: -1.7, y: -4.25, z: 0}
