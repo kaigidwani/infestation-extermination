@@ -85,22 +85,25 @@ public class ButtonUI : MonoBehaviour
             }
         }
 
-        if (ui.Currency < 4)
+        if (ui != null)
         {
-            hotBarFilters[0].SetActive(true);
-            hotBarCosts[0].color = Color.red;
-        }
-        else
-        {
-            hotBarFilters[0].SetActive(false);
-            hotBarCosts[0].color = Color.white;
+            if (ui.Currency < 4)
+            {
+                hotBarFilters[0].SetActive(true);
+                hotBarCosts[0].color = Color.red;
+            }
+            else
+            {
+                hotBarFilters[0].SetActive(false);
+                hotBarCosts[0].color = Color.white;
+            }
         }
     }
 
     // Start Screen Buttons
     public void PlayButton()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("Tutorial");
     }
 
     public void QuitButton()
@@ -137,14 +140,21 @@ public class ButtonUI : MonoBehaviour
 
     public void HomeButton()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("MainMenu");
         Time.timeScale = 1f;
     }
 
     public void RestartButton()
     {
-        SceneManager.LoadScene(1);
+        Scene activeScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(activeScene.name);
         Time.timeScale = 1f;
+    }
+
+    public void NextLevelButton()
+    {
+        Scene activeScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(activeScene.buildIndex + 1);
     }
 
     // Hot Bar Buttons
