@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 923841255737153650}
   - component: {fileID: 3925752726913894135}
   m_Layer: 0
-  m_Name: RobotPrefab
+  m_Name: LongRobotPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7803f1fbbcd45de488d5fda7ca6e288c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0afab81cf76c3b1419296da59b12980c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -101,20 +101,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20c4c6aa88f16ed45bd5231eb4414bf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cost: 4
-  damage: 20
+  cost: 6
+  damage: 40
   damageAdd: 10
   damageUpgTimes: 0
-  range: 4
+  range: 8
   rangeAdd: 1
   rangeUpgTimes: 0
-  rateOfFire: 2
+  rateOfFire: 5.5
   rateOfFireSub: 0.3
   rateOfFireUpgTimes: 0
   shootSFX: {fileID: 8924826482262955372}
-  idleSprite: {fileID: 21300000, guid: 7803f1fbbcd45de488d5fda7ca6e288c, type: 3}
-  shootingSprite: {fileID: 21300000, guid: b1f61e15eeb57d04184d6756595b937d, type: 3}
-  coolDownSprite: {fileID: 21300000, guid: 9106517cfb3f6e348812cc9afcc0e85c, type: 3}
+  idleSprite: {fileID: 21300000, guid: 0afab81cf76c3b1419296da59b12980c, type: 3}
+  shootingSprite: {fileID: 21300000, guid: 8abde71573fb26148b058b1dc7e99e50, type: 3}
+  coolDownSprite: {fileID: 21300000, guid: ee002eaaf1ea86b4e8efb39a89230db8, type: 3}
   radiusCircle: {fileID: 6899337977419420463}
 --- !u!82 &8924826482262955372
 AudioSource:

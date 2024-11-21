@@ -19,6 +19,7 @@ using UnityEngine.UI;
 public enum HotBar
 {
     item1,
+    item2,
     none
 }
 public class ButtonUI : MonoBehaviour
@@ -76,6 +77,11 @@ public class ButtonUI : MonoBehaviour
                 singlePress = true;
                 Item1();
             }
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                singlePress = true;
+                Item2();
+            }
         }
         else
         {
@@ -87,6 +93,19 @@ public class ButtonUI : MonoBehaviour
 
         if (ui != null)
         {
+            //Handles colors for the long robo
+            if (ui.Currency < 6)
+            {
+                hotBarFilters[1].SetActive(true);
+                hotBarCosts[1].color = Color.red;
+            }
+            else
+            {
+                hotBarFilters[1].SetActive(false);
+                hotBarCosts[1].color = Color.white;
+            }
+
+            //Handles colors for the pit-robo
             if (ui.Currency < 4)
             {
                 hotBarFilters[0].SetActive(true);
@@ -176,6 +195,27 @@ public class ButtonUI : MonoBehaviour
         {
             hotBar = HotBar.none;
             hotBarButtons[0].image.color = Color.white;
+        }
+    }
+
+    public void Item2()
+    {
+        if (state.State1 == State.Pause) return;
+
+        if (hotBar != HotBar.item2)
+        {
+            for (int i = 0; i < hotBarButtons.Length; i++)
+            {
+                hotBarButtons[i].image.color = Color.white;
+            }
+
+            hotBar = HotBar.item2;
+            hotBarButtons[1].image.color = Color.green;
+        }
+        else
+        {
+            hotBar = HotBar.none;
+            hotBarButtons[1].image.color = Color.white;
         }
     }
 

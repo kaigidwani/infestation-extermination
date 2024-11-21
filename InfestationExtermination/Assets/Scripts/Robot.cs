@@ -38,12 +38,18 @@ public class Robot : MonoBehaviour
 
     // The amount of damage the turret does in an attack
     [SerializeField] private int damage;
+    [SerializeField] private int damageAdd;
+    [SerializeField] private int damageUpgTimes;
 
     // The radius range a turret can shoot in
     [SerializeField] private int range;
+    [SerializeField] private int rangeAdd;
+    [SerializeField] private int rangeUpgTimes;
 
     // How often a turret can shoot
     [SerializeField] private float rateOfFire;
+    [SerializeField] private float rateOfFireSub;
+    [SerializeField] private float rateOfFireUpgTimes;
 
     // Last used time
     private float lastShotTime = 0;
@@ -412,9 +418,11 @@ public class Robot : MonoBehaviour
 
     public void UpgradeDamage()
     {
-        if (UIScript.Currency >= upgradeCostDamage)
+        if (damageUpgTimes < 5)
         {
-            damage += 10;
+            damage += damageAdd;
+            //Counts amount of times upgraded
+            damageUpgTimes++;
             UIScript.UpdateCurrency(-upgradeCostDamage);
             upgradeCostDamage += 2;
             UpdateStatScreen();
@@ -423,9 +431,11 @@ public class Robot : MonoBehaviour
 
     public void UpgradeFireRate()
     {
-        if (rateOfFire > 1 && UIScript.Currency >= upgradeCostFireRate)
+        if (rateOfFireUpgTimes < 5)
         {
-            rateOfFire -= 0.3f;
+            rateOfFire -= rateOfFireSub;
+            //Counts amount of times upgraded
+            rateOfFireUpgTimes++;
             UIScript.UpdateCurrency(-upgradeCostFireRate);
             upgradeCostFireRate += 2;
             UpdateStatScreen();
@@ -434,9 +444,11 @@ public class Robot : MonoBehaviour
 
     public void UpgradeRange()
     {
-        if (range < 8 && UIScript.Currency >= upgradeCostRange)
+        if (rangeUpgTimes < 5)
         {
-            range += 1;
+            range += rangeAdd;
+            //Counts amount of times upgraded
+            rangeUpgTimes++;
             UIScript.UpdateCurrency(-upgradeCostRange);
             upgradeCostRange += 2;
             UpdateStatScreen();

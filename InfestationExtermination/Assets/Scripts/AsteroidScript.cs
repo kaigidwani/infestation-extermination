@@ -10,6 +10,7 @@ using UnityEngine.UI;
 // SPECIAL NOTES:
 // ===============================
 // Change History:
+//  11/20/24 - Added in the LongRobo
 //  11/4/24 - Changed how spawning works - Justin Huang
 //  10/19/24 - Now the prompt will spawn where the astroid was, so players can simply double click
 //  10/22/24 - I dunno this didn't push. 
@@ -34,8 +35,9 @@ public class AsteroidScript : MonoBehaviour
     private GameState state;
     private ButtonUI buttonUI;
 
-    // Robot
+    // Robots
     public GameObject robot;
+    public GameObject longRobot;
 
     // Start is called before the first frame update
     void Start()
@@ -68,6 +70,18 @@ public class AsteroidScript : MonoBehaviour
             spawnedRobot.GetComponent<Robot>().AsteroidReference = this;
 
             UIScript.UpdateCurrency(robot.GetComponent<Robot>().Cost * -1);
+
+            ifObject = true;
+        }
+        else if (UIScript.Currency >= longRobot.GetComponent<Robot>().Cost && buttonUI.HotBar1 == HotBar.item2 && ifObject == false && state.State1 != State.Pause)
+        {
+            // Spawn the robot and save it as a game object
+            GameObject spawnedRobot = Instantiate(longRobot, asteroidPosition, new Quaternion());
+
+            // Set the asteroid reference of the spawned robot to the asteroid it is located on
+            spawnedRobot.GetComponent<Robot>().AsteroidReference = this;
+
+            UIScript.UpdateCurrency(longRobot.GetComponent<Robot>().Cost * -1);
 
             ifObject = true;
         }
