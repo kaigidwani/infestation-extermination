@@ -74,11 +74,14 @@ public class UIScript : MonoBehaviour
             Time.timeScale = 0f;
             lose = true;
             gameOver.SetActive(true);
+            state.State1 = State.Pause;
         }
 
         if (enemyManager.WaveNumber == enemyManager.WaveNumbers + 1)
         {
+            Time.timeScale = 0f;
             gameWin.SetActive(true);
+            state.State1 = State.Pause;
         }
     }
 

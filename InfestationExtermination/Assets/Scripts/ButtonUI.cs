@@ -137,6 +137,8 @@ public class ButtonUI : MonoBehaviour
     // Pause Screen Buttons
     public void PauseButton()
     {
+        if (state.State1 == State.Pause) return;
+
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
         state.State1 = State.Pause;
@@ -174,6 +176,7 @@ public class ButtonUI : MonoBehaviour
     {
         Scene activeScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(activeScene.buildIndex + 1);
+        Time.timeScale = 1f;
     }
 
     // Hot Bar Buttons
