@@ -6,7 +6,7 @@ using UnityEngine.UI;
 // ================================
 // AUTHOR: Emmett
 // CREATE DATE: 9/?/24
-// PURPOSE: Spawn promopt
+// PURPOSE: Place to spawn robot
 // SPECIAL NOTES:
 // ===============================
 // Change History:
@@ -21,7 +21,7 @@ public class AsteroidScript : MonoBehaviour
     //button pop up prefab
     public GameObject buttonPopUp;
     //THIS IS IMPORTANT. YOU MUST CHANGE OR ELSE THE ROBOT SPAWNING WILL BREAK IF THERE ARE MULTIPLE PROMTS. THIS NAMES AND SEPERATES THE BUTTONS. MAKE SURE THE NAME IS "Promt#"
-    public string promptName;
+    // public string promptName;
     //Canvas 
     public GameObject canvas;
     //bool to check if object on the asteroid
@@ -50,12 +50,6 @@ public class AsteroidScript : MonoBehaviour
 
         //Gets the current position as well as changing the Z.
         asteroidPosition = new Vector3(transform.position.x, transform.position.y, 0); //we may need to move this to update for the moving asteroids. But we'll cross that bridge when we get to it
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     //For when it gets clicked 

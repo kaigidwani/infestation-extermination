@@ -2060,7 +2060,7 @@ RectTransform:
   - {fileID: 174333245}
   - {fileID: 1265379761}
   - {fileID: 428806483}
-  - {fileID: 700448983}
+  - {fileID: 1420571080}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2121,11 +2121,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dbd9f8174705894ebab9cafa2ea9731, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &700448983 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 6659952913088330123, guid: afeb06f83084d684087e5e0ee739bf91, type: 3}
-  m_PrefabInstance: {fileID: 852162089}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &707785701
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4627,6 +4622,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
+--- !u!224 &1420571080 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6766830303255091527, guid: afeb06f83084d684087e5e0ee739bf91, type: 3}
+  m_PrefabInstance: {fileID: 852162089}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1428953949
 GameObject:
   m_ObjectHideFlags: 0
@@ -5226,10 +5226,10 @@ MonoBehaviour:
     - {fileID: 4791549053597893821, guid: ad03826f616ff4e4dadac541b64da1e5, type: 3}
     - {fileID: 4791549053597893821, guid: ad03826f616ff4e4dadac541b64da1e5, type: 3}
     - {fileID: 4791549053597893821, guid: a32b4fe6e17f50346bea4683e97c1a5b, type: 3}
+    - {fileID: 4791549053597893821, guid: ad03826f616ff4e4dadac541b64da1e5, type: 3}
+    - {fileID: 4791549053597893821, guid: ad03826f616ff4e4dadac541b64da1e5, type: 3}
     - {fileID: 4791549053597893821, guid: 5ac8c839b5da50c4ca10e8fbf439c046, type: 3}
     - {fileID: 4791549053597893821, guid: 5ac8c839b5da50c4ca10e8fbf439c046, type: 3}
-    - {fileID: 4791549053597893821, guid: 5ac8c839b5da50c4ca10e8fbf439c046, type: 3}
-    - {fileID: 0}
   - row:
     - {fileID: 4791549053597893821, guid: a32b4fe6e17f50346bea4683e97c1a5b, type: 3}
     - {fileID: 4791549053597893821, guid: 5ac8c839b5da50c4ca10e8fbf439c046, type: 3}

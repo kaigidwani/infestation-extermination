@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 2170266940768323529}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.299, y: 2.738, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7603737}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -104,13 +104,13 @@ MonoBehaviour:
   cost: 6
   damage: 40
   damageAdd: 10
-  damageUpgTimes: 0
+  damageUpgradeCost: 2
   range: 8
   rangeAdd: 1
-  rangeUpgTimes: 0
+  rangeUpgradeCost: 2
   rateOfFire: 5.5
   rateOfFireSub: 0.3
-  rateOfFireUpgTimes: 0
+  fireRateUpgradeCost: 2
   shootSFX: {fileID: 8924826482262955372}
   idleSprite: {fileID: 21300000, guid: 0afab81cf76c3b1419296da59b12980c, type: 3}
   shootingSprite: {fileID: 21300000, guid: 8abde71573fb26148b058b1dc7e99e50, type: 3}

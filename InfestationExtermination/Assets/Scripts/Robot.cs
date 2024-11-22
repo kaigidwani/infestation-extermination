@@ -39,17 +39,20 @@ public class Robot : MonoBehaviour
     // The amount of damage the turret does in an attack
     [SerializeField] private int damage;
     [SerializeField] private int damageAdd;
-    [SerializeField] private int damageUpgTimes;
+    private int damageUpgTimes = 0;
+    [SerializeField] private int damageUpgradeCost;
 
     // The radius range a turret can shoot in
     [SerializeField] private int range;
     [SerializeField] private int rangeAdd;
-    [SerializeField] private int rangeUpgTimes;
+    private int rangeUpgTimes = 0;
+    [SerializeField] private int rangeUpgradeCost;
 
     // How often a turret can shoot
     [SerializeField] private float rateOfFire;
     [SerializeField] private float rateOfFireSub;
-    [SerializeField] private float rateOfFireUpgTimes;
+    private int rateOfFireUpgTimes = 0;
+    [SerializeField] private int fireRateUpgradeCost;
 
     // Last used time
     private float lastShotTime = 0;
@@ -76,23 +79,7 @@ public class Robot : MonoBehaviour
     private Transform[] linePositions = new Transform [2];
     private float lineFadeTime;
 
-    // Stat Screen Stuff
-    private GameObject statScreen;
-    private TextMeshProUGUI damageText;
-    private TextMeshProUGUI fireRateText;
-    private TextMeshProUGUI rangeText;
-    private TextMeshProUGUI upgradeTextDamage;
-    private int upgradeCostDamage;
-    private TextMeshProUGUI upgradeTextFireRate;
-    private int upgradeCostFireRate;
-    private TextMeshProUGUI upgradeTextRange;
-    private int upgradeCostRange;
-
-    private Button damageUpgradeButton;
-    private Button fireRateUpgradeButton;
-    private Button rangeUpgradeButton;
-    private Button closeButton;
-
+    // Other Scripts
     private UIScript UIScript;
     private GameState state;
     private StatScreen stat;
@@ -109,27 +96,6 @@ public class Robot : MonoBehaviour
         set { cost = value; }
     }
 
-    // Getters and setters for turret damage
-    public int Damage
-    {
-        get { return damage; }
-        set { damage = value; }
-    }
-
-    // Getters and setters for turret range
-    public int Range
-    {
-        get { return range; }
-        set { range = value; }
-    }
-
-    // Getters and setters for turret range of fire
-    public float RateOfFire
-    {
-        get { return rateOfFire; }
-        set { rateOfFire = value; }
-    }
-
     // Getters and setters for the reference asteroid
     public AsteroidScript AsteroidReference
     {
@@ -137,23 +103,55 @@ public class Robot : MonoBehaviour
         set { asteroidReference = value; }
     }
 
-    // So that stat screen buttons update properly in reaction to currency
-    public int UpgradeCostDamage
+    // Damage Properties
+    public int Damage
     {
-        get => upgradeCostDamage;
-        set => upgradeCostDamage = value;
+        get { return damage; }
+        set { damage = value; }
     }
 
-    public int UpgradeCostFireRate
+    public int DamageAdd { get => damageAdd; }
+
+    public int DamageUpgTimes { get => damageUpgTimes; }
+
+    public int DamageUpgradeCost
     {
-        get => upgradeCostFireRate;
-        set => upgradeCostFireRate = value;
+        get => damageUpgradeCost;
+        set => damageUpgradeCost = value;
     }
 
-    public int UpgradeCostRange
+    // FireRate Properties
+    public float RateOfFire
     {
-        get => upgradeCostRange;
-        set => upgradeCostRange = value;
+        get { return rateOfFire; }
+        set { rateOfFire = value; }
+    }
+
+    public float RateOfFireSub { get => rateOfFireSub; }
+
+    public int RateOfFireUpgTimes { get => rateOfFireUpgTimes; }
+
+    public int FireRateUpgradeCost
+    {
+        get => fireRateUpgradeCost;
+        set => fireRateUpgradeCost = value;
+    }
+
+    // Range Properties
+    public int Range
+    {
+        get { return range; }
+        set { range = value; }
+    }
+
+    public int RangeAdd { get => rangeAdd; }
+
+    public int RangeUpgTimes { get =>  rangeUpgTimes; }
+
+    public int RangeUpgradeCost
+    {
+        get => rangeUpgradeCost;
+        set => rangeUpgradeCost = value;
     }
 
     public GameObject RadiusCircle
@@ -164,35 +162,21 @@ public class Robot : MonoBehaviour
     // Methods
 
     // Start is called before the first frame update
+    void Awake()
+    {
+        // Line Renderer Stuff
+        lineRenderer = GetComponent<LineRenderer>();
+        linePositions[0] = transform;
+        lineFadeTime = 0;
+    }
+
     void Start()
     {
         // Find Scripts
         enemyManager = GameObject.Find("EnemyManager");
         UIScript = GameObject.Find("Canvas").GetComponent<UIScript>();
         state = GameObject.Find("Canvas").GetComponent<GameState>();
-        stat = GameObject.Find("Stat Screen").GetComponent<StatScreen>();
-
-        // Line Renderer Stuff
-        lineRenderer = GetComponent<LineRenderer>();
-        linePositions[0] = transform;
-        lineFadeTime = 0;
-
-        // Find Stat Screen object and its componenets
-        statScreen = GameObject.Find("Stat Screen");
-        damageText = GameObject.Find("damage text").GetComponent<TextMeshProUGUI>();
-        fireRateText = GameObject.Find("fire rate text").GetComponent<TextMeshProUGUI>();
-        rangeText = GameObject.Find("range text").GetComponent<TextMeshProUGUI>();
-        upgradeTextDamage = GameObject.Find("damage upgrade cost text").GetComponent<TextMeshProUGUI>();
-        upgradeCostDamage = 2;
-        upgradeTextFireRate = GameObject.Find("fire rate upgrade cost text").GetComponent<TextMeshProUGUI>();
-        upgradeCostFireRate = 2;
-        upgradeTextRange = GameObject.Find("range upgrade cost text").GetComponent<TextMeshProUGUI>();
-        upgradeCostRange = 2;
-
-        damageUpgradeButton = GameObject.Find("damage upgrade button").GetComponent<Button>();
-        fireRateUpgradeButton = GameObject.Find("fire rate upgrade button").GetComponent<Button>();
-        rangeUpgradeButton = GameObject.Find("range upgrade button").GetComponent<Button>();
-        closeButton = GameObject.Find("close button").GetComponent<Button>();
+        stat = GameObject.Find("StatScreen").GetComponent<StatScreen>();
     }
 
     // Update is called once per frame
@@ -366,92 +350,48 @@ public class Robot : MonoBehaviour
     {
         if (state.State1 == State.Pause) return;
 
-        statScreen.transform.position = new Vector3(6.6666f, 0, 0);
-        UpdateStatScreen();
-
         stat.SelectedRobot = this;
-
-        if (damageUpgradeButton.onClick != null)
-        {
-            damageUpgradeButton.onClick.RemoveAllListeners();
-        }
-
-        if (fireRateUpgradeButton.onClick != null)
-        {
-            fireRateUpgradeButton.onClick.RemoveAllListeners();
-        }
-
-        if (rangeUpgradeButton.onClick != null)
-        {
-            rangeUpgradeButton.onClick.RemoveAllListeners();
-        }
-
-        if (closeButton.onClick != null)
-        {
-            closeButton.onClick.RemoveAllListeners();
-        }
-
-        damageUpgradeButton.onClick.AddListener(UpgradeDamage);
-        fireRateUpgradeButton.onClick.AddListener(UpgradeFireRate);
-        rangeUpgradeButton.onClick.AddListener(UpgradeRange);
-        closeButton.onClick.AddListener(CloseStatScreen);
+        stat.SetUp();
+        stat.UpdateStatScreen();
     }
 
-    private void UpdateStatScreen()
-    {
-        damageText.text = "Damage: " + damage;
-        fireRateText.text = "Fire Rate: " + (1 / rateOfFire);
-        rangeText.text = "Range: " + range;
-        upgradeTextDamage.text = "" + upgradeCostDamage;
-        upgradeTextFireRate.text = "" + upgradeCostFireRate;
-        upgradeTextRange.text = "" + upgradeCostRange;
-    }
-
-    // Stat Screen Buttons
-    public void CloseStatScreen()
-    {
-        if (state.State1 == State.Pause) return;
-
-        statScreen.transform.position = new Vector3(15, 0, 0);
-        radiusCircle.SetActive(false);
-    }
-
+    // Upgrade Methods
     public void UpgradeDamage()
     {
-        if (damageUpgTimes < 5)
+        if (damageUpgTimes < 5 && UIScript.Currency >= damageUpgradeCost)
         {
             damage += damageAdd;
             //Counts amount of times upgraded
             damageUpgTimes++;
-            UIScript.UpdateCurrency(-upgradeCostDamage);
-            upgradeCostDamage += 2;
-            UpdateStatScreen();
+            UIScript.UpdateCurrency(-damageUpgradeCost);
+            damageUpgradeCost += 2;
+            stat.UpdateStatScreen();
         }
     }
 
     public void UpgradeFireRate()
     {
-        if (rateOfFireUpgTimes < 5)
+        if (rateOfFireUpgTimes < 5 && UIScript.Currency >= fireRateUpgradeCost)
         {
             rateOfFire -= rateOfFireSub;
             //Counts amount of times upgraded
             rateOfFireUpgTimes++;
-            UIScript.UpdateCurrency(-upgradeCostFireRate);
-            upgradeCostFireRate += 2;
-            UpdateStatScreen();
+            UIScript.UpdateCurrency(-fireRateUpgradeCost);
+            fireRateUpgradeCost += 2;
+            stat.UpdateStatScreen();
         }
     }
 
     public void UpgradeRange()
     {
-        if (rangeUpgTimes < 5)
+        if (rangeUpgTimes < 5 && UIScript.Currency >= rangeUpgradeCost)
         {
             range += rangeAdd;
             //Counts amount of times upgraded
             rangeUpgTimes++;
-            UIScript.UpdateCurrency(-upgradeCostRange);
-            upgradeCostRange += 2;
-            UpdateStatScreen();
+            UIScript.UpdateCurrency(-rangeUpgradeCost);
+            rangeUpgradeCost += 2;
+            stat.UpdateStatScreen();
         }
     }
 }
