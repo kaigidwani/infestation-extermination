@@ -9,7 +9,7 @@ public class Bug : MonoBehaviour
     // --- Fields ---
     [SerializeField] private GameObject thisBug; // The bug this script is attached to
 
-    [SerializeField] private int health; // Amount of health a bug has
+    [SerializeField] private float health; // Amount of health a bug has
     [SerializeField] private float healthMax; // Max amount of health a bug has at start
     [SerializeField] private int damage; // Amount of damage a bug does in an attack
 
@@ -23,10 +23,10 @@ public class Bug : MonoBehaviour
 
     [SerializeField] private int rewardAmount; // How many crystals the player gains for killing this enemy
 
-// --- Properties ---
+    // --- Properties ---
 
-// Getters and setters for health amount
-public int Health
+    // Getters and setters for health amount
+    public float Health
     {
         get { return health; }
         set { health = value; }
@@ -111,7 +111,7 @@ public int Health
     }
 
     // Takes damage from a source and reduces health
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         // Reduce health by the amount of damage
         health -= damage;

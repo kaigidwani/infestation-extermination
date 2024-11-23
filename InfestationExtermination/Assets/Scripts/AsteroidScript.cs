@@ -10,6 +10,7 @@ using UnityEngine.UI;
 // SPECIAL NOTES:
 // ===============================
 // Change History:
+//  11/23/24 - onBlackHole boolean added, removed some old prompt code (Maybe I shouldn't do that) - Justin Huang
 //  11/20/24 - Added in the LongRobo
 //  11/4/24 - Changed how spawning works - Justin Huang
 //  10/19/24 - Now the prompt will spawn where the astroid was, so players can simply double click
@@ -18,14 +19,12 @@ using UnityEngine.UI;
 
 public class AsteroidScript : MonoBehaviour
 {
-    //button pop up prefab
-    public GameObject buttonPopUp;
-    //THIS IS IMPORTANT. YOU MUST CHANGE OR ELSE THE ROBOT SPAWNING WILL BREAK IF THERE ARE MULTIPLE PROMTS. THIS NAMES AND SEPERATES THE BUTTONS. MAKE SURE THE NAME IS "Promt#"
-    // public string promptName;
     //Canvas 
     public GameObject canvas;
+
     //bool to check if object on the asteroid
-    public bool ifObject;
+    public bool ifObject = false;
+    public bool onBlackHole = false;
 
     //Vector3 of the poisiton of asteroid
     public Vector3 asteroidPosition;

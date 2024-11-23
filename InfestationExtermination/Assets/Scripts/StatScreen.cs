@@ -146,7 +146,9 @@ public class StatScreen : MonoBehaviour
         // Pull Stat Screen over
         statScreen.transform.position = new Vector3(6.6666f, 0, 0);
 
-        // Set up Name, Icon and Upgrade Amount
+        // Set up Name and Icon
+        robotName.text = selectedRobot.Name;
+        icon.sprite = selectedRobot.GetComponent<SpriteRenderer>().sprite;
 
         // Conenct Buttons
         if (damageUpgradeButton.onClick != null)

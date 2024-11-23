@@ -10,6 +10,7 @@ using UnityEngine;
 // SPECIAL NOTES:
 // ===============================
 // Change History:           
+//  11/23/24 - Minor change so robot can tell if they are on blackhole by making it so that blackhole tell asteroids that they are on a blackhole - Justin Huang
 //  10/17/24 - Created
 //==================================
 
@@ -80,6 +81,8 @@ public class BlackHole : MonoBehaviour
                 // Rotate the asteroid around the center of the BlackHole object using the asteroidSpacing
                 asteroids[i].transform.RotateAround(transform.position, Vector3.forward, asteroidSpacing * i);
 
+                // Set asteroid's bool on blackhole to true
+                asteroids[i].GetComponent<AsteroidScript>().onBlackHole = true;
             }
         }
     }

@@ -16,6 +16,9 @@ using static UnityEngine.GraphicsBuffer;
 // SPECIAL NOTES:
 // ===============================
 // Change History:
+// 11/23/24 - Argh, I have not been documenting my changes. Anyways stat screen methods had been moved from here to StatScreen.cs
+//          - Also, a bunch of other minor changes like naming, adding properties, or moving stuff around.
+//          - Robot should now be buffed by 25% to attack, range and fire rate if on asteroid
 // 11/13/24 - Circle to represent range
 // 10/28/24 - I added a line renderer some stuff needs fixing, some bugs
 // 10/24/24 - Added in a function with shooting and changing the sprite when it does shoot. Should be future proof if we make another robot prefab. 
@@ -33,17 +36,20 @@ public class Robot : MonoBehaviour
 {
     // Fields
 
+    // The name of the turret
+    [SerializeField] private string name;
+
     // The cost of the turret
     [SerializeField] private int cost;
 
     // The amount of damage the turret does in an attack
-    [SerializeField] private int damage;
+    [SerializeField] private float damage;
     [SerializeField] private int damageAdd;
     private int damageUpgTimes = 0;
     [SerializeField] private int damageUpgradeCost;
 
     // The radius range a turret can shoot in
-    [SerializeField] private int range;
+    [SerializeField] private float range;
     [SerializeField] private int rangeAdd;
     private int rangeUpgTimes = 0;
     [SerializeField] private int rangeUpgradeCost;
@@ -60,14 +66,8 @@ public class Robot : MonoBehaviour
     // Cool down time
     private float coolDown = 100;
 
-    // The enemy manager
-    private GameObject enemyManager;
-
     // Shoot SFX
     [SerializeField] private AudioSource shootSFX;
-
-    // Reference to asteroid that this tower is placed onto
-    private AsteroidScript asteroidReference;
 
     //Sprites for firing
     [SerializeField] private Sprite idleSprite;
@@ -79,7 +79,11 @@ public class Robot : MonoBehaviour
     private Transform[] linePositions = new Transform [2];
     private float lineFadeTime;
 
+    // Reference to asteroid that this tower is placed onto
+    private AsteroidScript asteroidReference;
+
     // Other Scripts
+    private GameObject enemyManager;
     private UIScript UIScript;
     private GameState state;
     private StatScreen stat;
@@ -88,6 +92,12 @@ public class Robot : MonoBehaviour
     [SerializeField] private GameObject radiusCircle;
 
     // Properties
+
+    public string Name
+    {
+        get => name;
+        set => name = value;
+    }
 
     // Getters and setter for turret cost
     public int Cost
@@ -104,7 +114,7 @@ public class Robot : MonoBehaviour
     }
 
     // Damage Properties
-    public int Damage
+    public float Damage
     {
         get { return damage; }
         set { damage = value; }
@@ -138,7 +148,7 @@ public class Robot : MonoBehaviour
     }
 
     // Range Properties
-    public int Range
+    public float Range
     {
         get { return range; }
         set { range = value; }
@@ -161,7 +171,7 @@ public class Robot : MonoBehaviour
 
     // Methods
 
-    // Start is called before the first frame update
+    // Annoying had to initialize stuff here because something went wrong with start
     void Awake()
     {
         // Line Renderer Stuff
@@ -170,6 +180,7 @@ public class Robot : MonoBehaviour
         lineFadeTime = 0;
     }
 
+    // Start is called before the first frame update
     void Start()
     {
         // Find Scripts
@@ -177,6 +188,14 @@ public class Robot : MonoBehaviour
         UIScript = GameObject.Find("Canvas").GetComponent<UIScript>();
         state = GameObject.Find("Canvas").GetComponent<GameState>();
         stat = GameObject.Find("StatScreen").GetComponent<StatScreen>();
+
+        // if on blackhole
+        if (asteroidReference.onBlackHole == true)
+        {
+            damage *= 1.25f;
+            rateOfFire *= 0.8f;
+            range *= 1.25f;
+        }
     }
 
     // Update is called once per frame
@@ -220,71 +239,65 @@ public class Robot : MonoBehaviour
         if (radiusCircle.activeInHierarchy)
         {
             // This is not accurate
-            radiusCircle.transform.localScale = new Vector3(Range * 2, Range * 2, 1);
+            radiusCircle.transform.localScale = new Vector3(Range * 2.8f, Range * 2.8f, 1);
         }
     }
 
     // Attempt to shoot an enemy in range
     void AttemptShoot()
     {
-        // Check if cooldown is up with Delta Time
-        if (Time.time > lastShotTime + rateOfFire)
+        // Check that there is at least one enemy in range
+        if (enemyManager.GetComponent<EnemyManager>().EnemiesList.Count > 0)
         {
-            lastShotTime = Time.time;
+            // Create a list of enemies that are within range of this turret
+            List<GameObject> inRangeEnemies = new List<GameObject>();
 
-            // Print a debug log that we are going to try to shoot
-            // Debug.Log("Attempting to shoot!");
-
-            // If there is at least one enemy alive
-            if (enemyManager.GetComponent<EnemyManager>().EnemiesList.Count > 0)
+            // Find each enemy that is within range and add it to the list
+            foreach (GameObject currentEnemy in enemyManager.GetComponent<EnemyManager>().EnemiesList)
             {
-                // Create a list of enemies that are within range of this turret
-                List<GameObject> inRangeEnemies = new List<GameObject>();
-
-                // Find each enemy that is within range and add it to the list
-                foreach (GameObject currentEnemy in enemyManager.GetComponent<EnemyManager>().EnemiesList)
+                // If the distance to an enemy is within the range
+                if (Vector3.Distance(this.transform.position, currentEnemy.transform.position) < range)
                 {
-                    // If the distance to an enemy is within the range
-                    if (Vector3.Distance(this.transform.position, currentEnemy.transform.position) < range)
+                    // Add the current enemy to the list of in-range enemies
+                    inRangeEnemies.Add(currentEnemy);
+                }
+            }
+
+            // If there is at least 1 enemy in range
+            if (inRangeEnemies.Count > 0)
+            {
+                // Set the initial closest enemy to the first one
+                GameObject closestEnemy = enemyManager.GetComponent<EnemyManager>().EnemiesList[0];
+
+                // Set the initial closest distance to the first one
+                // This is so we don't need to redo the same math multiple times,
+                // every time we want to compare distances
+                float closestEnemyDist = Vector3.Distance(this.transform.position,
+                    enemyManager.GetComponent<EnemyManager>().EnemiesList[0].transform.position);
+
+                // Find the closest enemy that is within range
+                foreach (GameObject currentEnemy in inRangeEnemies)
+                {
+                    // Saves the distance to the current enemy in the list
+                    float currentDistance = Vector3.Distance(this.transform.position,
+                        currentEnemy.transform.position);
+
+                    // If the current enemy is closer than the previously closest enemy
+                    if (currentDistance < closestEnemyDist)
                     {
-                        // Add the current enemy to the list of in-range enemies
-                        inRangeEnemies.Add(currentEnemy);
+                        // Set the closest enemy to the current enemy
+                        closestEnemy = currentEnemy;
+
+                        // Set the closest distance to the current distance
+                        closestEnemyDist = currentDistance;
                     }
                 }
 
-
-                // If there is at least 1 enemy in range
-                if (inRangeEnemies.Count > 0)
+                // Call the shoot function on the nearest enemy if off cooldown
+                if (Time.time > lastShotTime + rateOfFire)
                 {
-                    // Set the initial closest enemy to the first one
-                    GameObject closestEnemy = enemyManager.GetComponent<EnemyManager>().EnemiesList[0];
-
-                    // Set the initial closest distance to the first one
-                    // This is so we don't need to redo the same math multiple times,
-                    // every time we want to compare distances
-                    float closestEnemyDist = Vector3.Distance(this.transform.position,
-                        enemyManager.GetComponent<EnemyManager>().EnemiesList[0].transform.position);
-
-                    // Find the closest enemy that is within range
-                    foreach (GameObject currentEnemy in inRangeEnemies)
-                    {
-                        // Saves the distance to the current enemy in the list
-                        float currentDistance = Vector3.Distance(this.transform.position,
-                            currentEnemy.transform.position);
-
-                        // If the current enemy is closer than the previously closest enemy
-                        if (currentDistance < closestEnemyDist)
-                        {
-                            // Set the closest enemy to the current enemy
-                            closestEnemy = currentEnemy;
-
-                            // Set the closest distance to the current distance
-                            closestEnemyDist = currentDistance;
-                        }
-                    }
-
-                    // Call the shoot function on the nearest enemy
                     Shoot(closestEnemy);
+                    lastShotTime = Time.time;
                 }
             }
         }
