@@ -2482,6 +2482,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -10.200001
       objectReference: {fileID: 0}
+    - target: {fileID: 4436140706315924506, guid: afeb06f83084d684087e5e0ee739bf91, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 138
+      objectReference: {fileID: 0}
     - target: {fileID: 5137408730775249793, guid: afeb06f83084d684087e5e0ee739bf91, type: 3}
       propertyPath: m_Name
       value: Stat Screen

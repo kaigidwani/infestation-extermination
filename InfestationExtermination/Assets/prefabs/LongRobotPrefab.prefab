@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20c4c6aa88f16ed45bd5231eb4414bf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Long Robot
+  name: Long-Robo
   cost: 6
   damage: 40
   damageAdd: 10
