@@ -200,7 +200,7 @@ public class StatScreen : MonoBehaviour
         fireRateText.text = "Fire Rate: " + Math.Round((1 / selectedRobot.RateOfFire), 2);
         fireRateUpgradeCostText.text = selectedRobot.FireRateUpgradeCost.ToString();
         fireRateUpgradeCountText.text = selectedRobot.RateOfFireUpgTimes + "/5";
-        fireRateUpgradeAmountText.text = "-" + Math.Round(selectedRobot.RateOfFireSub, 2);
+        fireRateUpgradeAmountText.text = "*" + Math.Round(selectedRobot.RateOfFireSub, 2);
 
         // RangeSection
         rangeText.text = "Range: " + selectedRobot.Range;

@@ -101,16 +101,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20c4c6aa88f16ed45bd5231eb4414bf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Pit-Robo
+  robotName: Pit-Robo
   cost: 4
   damage: 20
   damageAdd: 10
   damageUpgradeCost: 2
   range: 4
-  rangeAdd: 1
+  rangeAdd: 0.5
   rangeUpgradeCost: 2
   rateOfFire: 2
-  rateOfFireSub: 0.33333334
+  rateOfFireSub: 0.8
   fireRateUpgradeCost: 2
   shootSFX: {fileID: 8924826482262955372}
   idleSprite: {fileID: 21300000, guid: 7803f1fbbcd45de488d5fda7ca6e288c, type: 3}

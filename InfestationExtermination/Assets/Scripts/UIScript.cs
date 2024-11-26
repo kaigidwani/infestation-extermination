@@ -23,6 +23,7 @@ public class UIScript : MonoBehaviour
     private int health = 0;
     private int currency = 0;
     private bool lose = false;
+    private bool win = false;
     [SerializeField] private TextMeshProUGUI healthText;
     [SerializeField] private TextMeshProUGUI currencyText;
     [SerializeField] private TextMeshProUGUI gameModeText;
@@ -77,9 +78,10 @@ public class UIScript : MonoBehaviour
             state.State1 = State.Pause;
         }
 
-        if (enemyManager.WaveNumber == enemyManager.WaveNumbers + 1)
+        if (enemyManager.WaveNumber == enemyManager.WaveNumbers + 1 && win == false)
         {
             Time.timeScale = 0f;
+            win = true;
             gameWin.SetActive(true);
             state.State1 = State.Pause;
         }

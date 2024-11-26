@@ -37,20 +37,20 @@ public class Robot : MonoBehaviour
     // Fields
 
     // The name of the turret
-    [SerializeField] private string name;
+    [SerializeField] private string robotName;
 
     // The cost of the turret
     [SerializeField] private int cost;
 
     // The amount of damage the turret does in an attack
     [SerializeField] private float damage;
-    [SerializeField] private int damageAdd;
+    [SerializeField] private float damageAdd;
     private int damageUpgTimes = 0;
     [SerializeField] private int damageUpgradeCost;
 
     // The radius range a turret can shoot in
     [SerializeField] private float range;
-    [SerializeField] private int rangeAdd;
+    [SerializeField] private float rangeAdd;
     private int rangeUpgTimes = 0;
     [SerializeField] private int rangeUpgradeCost;
 
@@ -95,8 +95,8 @@ public class Robot : MonoBehaviour
 
     public string Name
     {
-        get => name;
-        set => name = value;
+        get => robotName;
+        set => robotName = value;
     }
 
     // Getters and setter for turret cost
@@ -120,7 +120,7 @@ public class Robot : MonoBehaviour
         set { damage = value; }
     }
 
-    public int DamageAdd { get => damageAdd; }
+    public float DamageAdd { get => damageAdd; }
 
     public int DamageUpgTimes { get => damageUpgTimes; }
 
@@ -154,7 +154,7 @@ public class Robot : MonoBehaviour
         set { range = value; }
     }
 
-    public int RangeAdd { get => rangeAdd; }
+    public float RangeAdd { get => rangeAdd; }
 
     public int RangeUpgTimes { get =>  rangeUpgTimes; }
 
@@ -386,7 +386,7 @@ public class Robot : MonoBehaviour
     {
         if (rateOfFireUpgTimes < 5 && UIScript.Currency >= fireRateUpgradeCost)
         {
-            rateOfFire -= rateOfFireSub;
+            rateOfFire *= rateOfFireSub;
             //Counts amount of times upgraded
             rateOfFireUpgTimes++;
             UIScript.UpdateCurrency(-fireRateUpgradeCost);
