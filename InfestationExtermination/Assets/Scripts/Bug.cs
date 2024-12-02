@@ -16,7 +16,7 @@ public class Bug : MonoBehaviour
     [SerializeField] private float speed = 1.0f; // Speed that the bug will move at
     [SerializeField] private List<Vector3> positions = new List<Vector3>(); // List of positions for the bug to travel to
     [SerializeField] private GameObject targetObject; // Target object of bug
-    private Transform target; // Variable to hold target position
+    private Vector3 target; // Variable to hold target position
     private int positionIndex; // Current index of position list
 
     [SerializeField] private Image hBar; //health bar
@@ -78,10 +78,6 @@ public class Bug : MonoBehaviour
 
         // Set position index to 0
         positionIndex = 0;
-
-        // Set target
-        target = targetObject.transform;
-
     }
 
     // Update is called once per frame
@@ -91,19 +87,19 @@ public class Bug : MonoBehaviour
         if (positionIndex < positions.Count)
         {
             // Move target to new position
-            targetObject.transform.position = positions[positionIndex];
+            target = positions[positionIndex];
 
             // Move position a step closer to target
             float step = speed * Time.deltaTime;
-            transform.position = Vector3.MoveTowards(transform.position, target.position, step);
+            transform.position = Vector3.MoveTowards(transform.position, target, step);
 
             // Calculate the direction and angle (degrees) to the target then apply rotation
-            Vector2 targetDirection = new Vector2(target.position.x - transform.position.x, target.position.y - transform.position.y);
+            Vector2 targetDirection = new Vector2(target.x - transform.position.x, target.y - transform.position.y);
             float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0, 0, angle);
 
             // If the bug has reached its current target, increment the position index
-            if (Vector3.Distance(transform.position, target.position) < 0.001f)
+            if (Vector3.Distance(transform.position, target) < 0.001f)
             {
                 positionIndex++;
             }

@@ -104,7 +104,7 @@ MonoBehaviour:
   robotName: Pit-Robo
   cost: 4
   damage: 20
-  damageAdd: 10
+  damageAdd: 5
   damageUpgradeCost: 2
   range: 4
   rangeAdd: 0.5

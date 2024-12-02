@@ -37,8 +37,12 @@ public class EnemyManager : MonoBehaviour
     // Wave 2 (Testing array method)
     [SerializeField] private List<Row> enemyWaves;
 
-    // List of all bug enemies
+    // List of all bug enemies & Related Varibles for spawning
     List<GameObject> enemiesList = new List<GameObject>();
+    List<GameObject> enemiesToSpawnList = new List<GameObject>();
+    private int count;
+    private float timer;
+    [SerializeField] private float timeBetweenEnemies;
 
     // List of all bug enemies to be deleted
     // This prevents errors caused by deleting an item while it exists in a list being looped through
@@ -48,7 +52,7 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private Vector3 bugSpawnPoint;
 
     // The distance between each enemy
-    [SerializeField] private float distanceBetweenEnemies;
+    // [SerializeField] private float distanceBetweenEnemies;
 
     // Check what wave it is
     private int waveNumber = 1;
@@ -99,6 +103,27 @@ public class EnemyManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        timer += Time.deltaTime;
+
+        // Loop through to spawn bugs on a timer
+        if (count < enemiesToSpawnList.Count && timer > timeBetweenEnemies)
+        {
+            EnemiesList.Add(
+                Instantiate(
+                    enemiesToSpawnList[count],
+                    new Vector3(
+                        bugSpawnPoint.x,
+                        bugSpawnPoint.y,
+                        bugSpawnPoint.z
+                        ),
+                    Quaternion.identity
+                    )
+                    );
+
+            count++;
+            timer = 0;
+        }
+
         // Loop through every enemy and check if its health is <= 0
         foreach (GameObject enemy in EnemiesList)
         {
@@ -134,7 +159,7 @@ public class EnemyManager : MonoBehaviour
         }
 
         // When enemy list is empty
-        if (enemiesList.Count == 0 && state.State1 == State.Wave)
+        if (enemiesList.Count == 0 && count >= enemiesToSpawnList.Count && state.State1 == State.Wave)
         {
             state.State1 = State.Build;
             UIScript.UpdateGameMode();
@@ -150,21 +175,25 @@ public class EnemyManager : MonoBehaviour
 
     public void StartWave()
     {
-        List<GameObject> enemyWave = enemyWaves[waveNumber - 1].row;
+        //List<GameObject> enemyWave = enemyWaves[waveNumber - 1].row;
 
-        for (int i = 0; i < enemyWave.Count; i++)
-        {
-            EnemiesList.Add(
-                Instantiate(
-                    enemyWave[i],
-                    new Vector3(
-                        bugSpawnPoint.x,
-                        bugSpawnPoint.y + distanceBetweenEnemies * i,
-                        bugSpawnPoint.z
-                        ),
-                    Quaternion.identity
-                    )
-                    );
-        }
+        //for (int i = 0; i < enemyWave.Count; i++)
+        //{
+        //    EnemiesList.Add(
+        //        Instantiate(
+        //            enemyWave[i],
+        //            new Vector3(
+        //                bugSpawnPoint.x,
+        //                bugSpawnPoint.y + distanceBetweenEnemies * i,
+        //                bugSpawnPoint.z
+        //                ),
+        //            Quaternion.identity
+        //            )
+        //            );
+        //}
+
+        enemiesToSpawnList = enemyWaves[waveNumber - 1].row;
+        count = 0;
+        timer = timeBetweenEnemies;
     }
 }

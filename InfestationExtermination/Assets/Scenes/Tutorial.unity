@@ -6932,8 +6932,8 @@ MonoBehaviour:
     - {fileID: 4791549053597893821, guid: a3f7609f7cfc79d40a3d1a79497ab148, type: 3}
     - {fileID: 4791549053597893821, guid: a3f7609f7cfc79d40a3d1a79497ab148, type: 3}
     - {fileID: 4791549053597893821, guid: a3f7609f7cfc79d40a3d1a79497ab148, type: 3}
+  timeBetweenEnemies: 2
   bugSpawnPoint: {x: -7.87, y: 0, z: 0}
-  distanceBetweenEnemies: 10
 --- !u!4 &1607619852
 Transform:
   m_ObjectHideFlags: 0
