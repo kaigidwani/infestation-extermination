@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisBug: {fileID: 0}
-  health: 350
+  health: 650
   healthMax: 0
   damage: 4
   speed: 1.5

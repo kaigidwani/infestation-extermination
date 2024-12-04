@@ -11,6 +11,7 @@ using UnityEngine;
 // SPECIAL NOTES:
 // ===============================
 // Change History://
+//  12/4/24 - Squish sound added
 //  11/8/24 - Boss bug added
 //  11/7/24 - Added in a wave system that can is fully reliant on lists. 
 //  11/6/24 - Added in a wave system that uses lists instead of a count. Only works for wave 2 but I will change it to work for other waves. 
@@ -68,6 +69,9 @@ public class EnemyManager : MonoBehaviour
 
     // Reference to the ButtonUI Script
     private ButtonUI ButtonUI;
+
+    // Death SFX
+    [SerializeField] private AudioSource squishSFX;
 
     // === Properties ===
 
@@ -135,6 +139,9 @@ public class EnemyManager : MonoBehaviour
 
                 // Reward the amount of currency to the player
                 UIScript.UpdateCurrency(enemy.GetComponent<Bug>().RewardAmount);
+
+                //Plays a sound
+                squishSFX.Play();
             }
 
             // If the enemy reaches the end of the path, destroy the enemy and damage the player
