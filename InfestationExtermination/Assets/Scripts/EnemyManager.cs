@@ -175,7 +175,6 @@ public class EnemyManager : MonoBehaviour
             if (waveNumber < enemyWaves.Count + 1)
             {
                 ButtonUI.StartWaveButton.SetActive(true);
-                ButtonUI.StartWaveButtonText.text = "Start Wave " + waveNumber;
             }
         }
     }
